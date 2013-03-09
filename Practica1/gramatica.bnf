@@ -1,96 +1,140 @@
-<var> ::= "var" <variables>
-<variables> ::= <ident><variable> ":" "set of integer" ";"<variables>
-	|<ident><variable> ":" "set of real" ";"<variables>
-	|<ident><variable> ":" "set of character" ";"<variables>
-	|<ident><variable> ":" "set of boolean" ";"<variables>
-	|<ident><variable> ":" "integer" ";"<variables>
-	|<ident><variable> ":" "real" ";"<variables>
-	|<ident><variable> ":" "character" ";"<variables>
-	|<ident><variable> ":" "boolean" ";"<variables>
-	|<ident><variable> ":" "set of integer" ";"
-	|<ident><variable> ":" "set of real" ";"
-	|<ident><variable> ":" "set of character" ";"
-	|<ident><variable> ":" "set of boolean" ";"
-	|<ident><variable> ":" "integer" ";"
-	|<ident><variable> ":" "real" ";"
-	|<ident><variable> ":" "character" ";"
-	|<ident><variable> ":" "boolean" ";"
-<variable> ::= "," <ident><variable>|""
+<Programa> ::= <Cabecera_programa>
+	<bloque>
+<bloque> ::= <Inicio_de_bloque>
+	<Declar_de_variables_locales>
+	<Declar_de_subprogs>
+	<Sentencias>
+	<Fin_de_bloque>
+<Declar_de_subprogs> ::= <Declar_de_subprogs>
+	<Declar_subprog>
+	| ""
+<Declar_subprog> ::= <Cabecera_subprograma>
+	<bloque>
+<Declar_de_variables_locales> ::= <Marca_ini_declar_variables>
+	<Variables_locales>
+	<Marca_fin_declar_variables>
+	| ""
+<Cabecera_programa> ::= (Dependerá del lenguaje de referencia)
 
 
 
-<aEExp> ::= "("<aEExp>")"
-	|"+"<aEExp>
-	|"-"<aEExp>
-	|<aEExp>"+"<aEExp>
-	|<aEExp>"-"<aEExp>
-	|<aEExp>"*"<aEExp>
-	|<aEExp>"/"<aEExp>
-	|<ident>
-	|<eNum>
-<aRExp> ::= "("<aRExp>")"
-	|"+"<aRExp>
-	|"-"<aRExp>
-	|<aRExp>"+"<aRExp>
-	|<aRExp>"-"<aRExp>
-	|<aRExp>"*"<aRExp>
-	|<aRExp>"/"<aRExp>
-	|<ident>
-	|<rNum>
-<lEExp> ::= "("<lEExp>")"
-	|<lEExp>">"<lEExp>
-	|<lEExp>">="<lEExp>
-	|<lEExp>"<"<lEExp>
-	|<lEExp>"<="<lEExp>
-	|<lEExp>"="<lEExp>
-	|<lEExp>"¬="<lEExp>
-	|<lEExp>"<>"<lEExp>
-	|<ident>
-	|<rNum>
-<lRExp> ::= "("<lRExp>")"
-	|<lRExp>">"<lRExp>
-	|<lRExp>">="<lRExp>
-	|<lRExp>"<"<lRExp>
-	|<lRExp>"<="<lRExp>
-	|<lRExp>"="<lRExp>
-	|<lRExp>"¬="<lRExp>
-	|<lRExp>"<>"<lRExp>
-	|<ident>
-	|<rNum>
-<bExp> ::= <bExp>"and"<bExp>
-	|<bExp>"or"<bExp>
-	|<bExp>"xor"<bExp>
-	|"not"<bExp>
 
-<ident> ::= <car><identR>
-	|"_"<identR>
-<identR> ::= <identR><dig>
-	|<identR><car>
-	|<dig>
-	|<car>
+<Inicio_de_bloque> ::= "begin"
+<Fin_de_bloque> ::= "end"
+<Variables_locales> ::= <Variables_locales>
+	<Cuerpo_declar_variables>
+	| <Cuerpo_declar_variables>
+<Cuerpo_declar_variables> ::= "var" <variables>
+<variables> ::= <identificador> <variable> <dos_puntos> <tipo_variable> <punto_coma> <variables>
+	|<identificador> <variable> <dos_puntos> <tipo_variable> <punto_coma>
+<variable> ::= "," <identificador><variable>|""
 
-<cEntero> ::= "<sent0>"
-<cEntInicial> ::= <eNum><enteros>|""
-<enteros> ::= "," <eNum><enteros>|""
+<Cabecera_subprog> ::= (Dependerá del lenguaje de referencia)
 
-<cReal> ::= "<sent1>"
-<cReInicial> ::= <rNum><reales>|""
-<reales> ::= "," <rNum><reales>|""
 
-<cCaracter> ::= "<sent2>"
-<cCarInicial> ::= <caracter><caracteres>|""
-<caracteres> ::= "," <caracter><caracteres>|""
+<Sentencias> ::= <Sentencias> <Sentencia>
+	| <Sentencia>
+<Sentencia> ::= <bloque>
+	| <sentencia_asignacion>
+	| <sentencia_if>
+	| <sentencia_while>
+	| <sentencia_entrada>
+	| <sentencia_salida>
+	| <sentencia_return> (si el lenguaje soporta funciones)
 
-<eNum> ::= <eNum><dig>
-	|<dig>
-<rNum> ::= <eNum>"."<eNum>
-<caracter> ::= '"'<car>'"'|"'"<car>"'"
 
-<dig> ::= "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"
-<car> ::= "a"|"b"|"c"|"d"|"e"|"f"|"g"|"h"|"i"|"j"|"k"|"l"|"m"
+	| (Resto de sentencias del lenguaje asignado)
+
+
+<sentencia_asignacion> ::= <identificador> ":="
+
+
+<sentencia_if> ::= (Dependerá del lenguaje de referencia)
+
+
+<sentencia_while> ::= (Dependerá del lenguaje de referencia)
+
+
+<sentencia_entrada> ::= <nomb_entrada> <lista_variables>
+<sentencia_salida> ::= <nomb_salida> <lista_expresiones_o_cadena>
+<expresion> ::= ( <expresion> )
+	| <op_unario> <expresion>
+	| <expresion> <op_binario> <expresion>
+	| <identificador>
+	| <constante>
+	| <funcion> (si el lenguaje soporta funciones)
+	| (Resto de expresiones del lenguaje de referencia)
+
+
+
+<conjuntoEnteros> ::= "[]"
+	|"["<expresionEntera> <enteros>"]"
+<enteros> ::= ","<expresionEntera> <enteros>
+	|""
+<conjuntoReales> ::= "[]"
+	|"["<expresionReal> <reales>"]"
+<reales> ::= ","<expresionReal> <reales>
+	|""
+<conjuntoCaracteres> ::= "[]"
+	|"["<caracter> <caracteres>"]"
+<caracteres> ::= ","<caracter> <caracteres>
+	|""
+<conjuntoBooleanos> ::= "[]"
+	|"["<expresionBooleana> <booleanos>"]"
+<booleanos> ::= ","<expresionBooleana> <booleanos>
+	|""
+
+<expresionEntera> ::= "("<expresionEntera>")"
+	|"+"<expresionEntera>
+	|"-"<expresionEntera>
+	|<expresionEntera>"+"<expresionEntera>
+	|<expresionEntera>"-"<expresionEntera>
+	|<expresionEntera>"*"<expresionEntera>
+	|<expresionEntera>"/"<expresionEntera>
+	|<identificador>
+	|<constanteEntera>
+<expresionLogicaEntera> ::= <expresionEntera> <operador_logico> <expresionEntera>
+<expresionReal> ::= "("<expresionReal>")"
+	|"+"<expresionReal>
+	|"-"<expresionReal>
+	|<expresionReal>"+"<expresionReal>
+	|<expresionReal>"-"<expresionReal>
+	|<expresionReal>"*"<expresionReal>
+	|<expresionReal>"/"<expresionReal>
+	|<identificador>
+	|<coonstanteReal>
+<expresionLogicaReal> ::= <expresionReal> <operador_logico> <expresionReal>
+<expresionBooleana> ::= "("<expresionBooleana>")"
+	|<expresionBooleana>"and"<expresionBooleana>
+	|<expresionBooleana>"or"<expresionBooleana>
+	|<expresionBooleana>"xor"<expresionBooleana>
+	|"not"<expresionBooleana>
+	|<identificador>
+	|<booleano>
+	|<expresionLogicaEntera>
+	|<expresionRealLogica>
+
+<identificador> ::= <letra> <restoIdentificador>
+	|"_"<restoIdentificador>
+<restoIdentificador> ::= <restoIdentificador> <digito>
+	|<restoIdentificador> <letra>
+	|<digito>
+	|<letra>
+
+<constanteEntera> ::= <constanteEntera> <digito>
+	|<digito>
+<constanteReal> ::= <constanteEntera>"."<constanteEntera>
+<caracter> ::= "'"<letra>"'"
+<digito> ::= "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"
+<letra> ::= "a"|"b"|"c"|"d"|"e"|"f"|"g"|"h"|"i"|"j"|"k"|"l"|"m"
 	|"n"|"o"|"p"|"q"|"r"|"s"|"t"|"u"|"v"|"w"|"x"|"y"|"z"
 	|"A"|"B"|"C"|"D"|"E"|"F"|"G"|"H"|"I"|"J"|"K"|"L"|"M"
 	|"N"|"O"|"P"|"Q"|"R"|"S"|"T"|"U"|"V"|"W"|"X"|"Y"|"Z"
-<booleano> ::= "true"|"false"<sent0> :=" <cEntInicial> " |.
-<sent1> :=" <cEntInicial> "" <cReInicial> " |.
-<sent2> :=" <cEntInicial> "" <cReInicial> "" <cCarInicial> " |.
+<booleano> ::= "true"|"false"
+
+<operador_logico> ::= ">"|">="|"<"|"<="|"="|"¬="|"<>"
+<tipo_variable> ::= "set of integer"|"set of real"
+	|"set of character"|"set of boolean"
+	|"integer"|"real"|"character"|"boolean"
+<punto_coma> ::= ";"
+<dos_puntos> ::= ":"
