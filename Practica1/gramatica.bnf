@@ -46,9 +46,14 @@
 	| (Resto de sentencias del lenguaje asignado)
 
 
-<sentencia_asignacion> ::= <identificador> ":="
-
-
+<sentencia_asignacion> ::= <identificador>":="<conjuntoEnteros><punto_coma>
+	|<identificador>":="<conjuntoReales><punto_coma>
+	|<identificador>":="<conjuntoCaracteres><punto_coma>
+	|<identificador>":="<conjuntoBooleanos><punto_coma>
+	|<identificador>":="<expresionEntera><punto_coma>
+	|<identificador>":="<expresionReal><punto_coma>
+	|<identificador>":="<expresionBooleana><punto_coma>
+	|<identificador>":="<caracter><punto_coma>
 <sentencia_if> ::= (Dependerá del lenguaje de referencia)
 
 
