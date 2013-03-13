@@ -25,8 +25,22 @@
 	<Cuerpo_declar_variables>
 	| <Cuerpo_declar_variables>
 <Cuerpo_declar_variables> ::= "var" <variables>
-<variables> ::= <identificador> <variable> <dos_puntos> <tipo_variable> <punto_coma> <variables>
-	|<identificador> <variable> <dos_puntos> <tipo_variable> <punto_coma>
+<variables> ::= <identificador> <variable> ":" "set of integer" ";" <variables>
+	|<identificador> <variable> ":" "set of real" ";" <variables>
+	|<identificador> <variable> ":" "set of character" ";" <variables>
+	|<identificador> <variable> ":" "set of boolean" ";" <variables>
+	|<identificador> <variable> ":" "integer" ";" <variables>
+	|<identificador> <variable> ":" "real" ";" <variables>
+	|<identificador> <variable> ":" "character" ";" <variables>
+	|<identificador> <variable> ":" "boolean" ";" <variables>
+	|<identificador> <variable> ":" "set of integer" ";"
+	|<identificador> <variable> ":" "set of real" ";"
+	|<identificador> <variable> ":" "set of character" ";"
+	|<identificador> <variable> ":" "set of boolean" ";"
+	|<identificador> <variable> ":" "integer" ";"
+	|<identificador> <variable> ":" "real" ";"
+	|<identificador> <variable> ":" "real" ";"
+	|<identificador> <variable> ":" "boolean" ";"
 <variable> ::= "," <identificador><variable>|""
 
 <Cabecera_subprog> ::= (Dependerá del lenguaje de referencia)
@@ -46,14 +60,14 @@
 	| (Resto de sentencias del lenguaje asignado)
 
 
-<sentencia_asignacion> ::= <identificador>":="<conjuntoEnteros><punto_coma>
-	|<identificador>":="<conjuntoReales><punto_coma>
-	|<identificador>":="<conjuntoCaracteres><punto_coma>
-	|<identificador>":="<conjuntoBooleanos><punto_coma>
-	|<identificador>":="<expresionEntera><punto_coma>
-	|<identificador>":="<expresionReal><punto_coma>
-	|<identificador>":="<expresionBooleana><punto_coma>
-	|<identificador>":="<caracter><punto_coma>
+<sentencia_asignacion> ::= <identificador>":="<conjuntoEnteros>";"
+	|<identificador>":="<conjuntoReales>";"
+	|<identificador>":="<conjuntoCaracteres>";"
+	|<identificador>":="<conjuntoBooleanos>";"
+	|<identificador>":="<expresionEntera>";"
+	|<identificador>":="<expresionReal>";"
+	|<identificador>":="<expresionBooleana>";"
+	|<identificador>":="<caracter>";"
 <sentencia_if> ::= (Dependerá del lenguaje de referencia)
 
 
@@ -98,7 +112,13 @@
 	|<expresionEntera>"/"<expresionEntera>
 	|<identificador>
 	|<constanteEntera>
-<expresionLogicaEntera> ::= <expresionEntera> <operador_logico> <expresionEntera>
+<expresionLogicaEntera> ::= <expresionEntera> ">" <expresionEntera>
+	|<expresionEntera> ">=" <expresionEntera>
+	|<expresionEntera> "<" <expresionEntera>
+	|<expresionEntera> "<=" <expresionEntera>
+	|<expresionEntera> "=" <expresionEntera>
+	|<expresionEntera> "¬=" <expresionEntera>
+	|<expresionEntera> "<>" <expresionEntera>
 <expresionReal> ::= "("<expresionReal>")"
 	|"+"<expresionReal>
 	|"-"<expresionReal>
@@ -108,7 +128,13 @@
 	|<expresionReal>"/"<expresionReal>
 	|<identificador>
 	|<coonstanteReal>
-<expresionLogicaReal> ::= <expresionReal> <operador_logico> <expresionReal>
+<expresionLogicaReal> ::= <expresionReal> ">" <expresionReal>
+	|<expresionReal> ">=" <expresionReal>
+	|<expresionReal> "<" <expresionReal>
+	|<expresionReal> "<=" <expresionReal>
+	|<expresionReal> "=" <expresionReal>
+	|<expresionReal> "¬=" <expresionReal>
+	|<expresionReal> "<>" <expresionReal>
 <expresionBooleana> ::= "("<expresionBooleana>")"
 	|<expresionBooleana>"and"<expresionBooleana>
 	|<expresionBooleana>"or"<expresionBooleana>
@@ -117,7 +143,7 @@
 	|<identificador>
 	|<booleano>
 	|<expresionLogicaEntera>
-	|<expresionRealLogica>
+	|<expresionLogicaReal>
 
 <identificador> ::= <letra> <restoIdentificador>
 	|"_"<restoIdentificador>
@@ -136,10 +162,3 @@
 	|"A"|"B"|"C"|"D"|"E"|"F"|"G"|"H"|"I"|"J"|"K"|"L"|"M"
 	|"N"|"O"|"P"|"Q"|"R"|"S"|"T"|"U"|"V"|"W"|"X"|"Y"|"Z"
 <booleano> ::= "true"|"false"
-
-<operador_logico> ::= ">"|">="|"<"|"<="|"="|"¬="|"<>"
-<tipo_variable> ::= "set of integer"|"set of real"
-	|"set of character"|"set of boolean"
-	|"integer"|"real"|"character"|"boolean"
-<punto_coma> ::= ";"
-<dos_puntos> ::= ":"
