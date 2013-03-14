@@ -1,50 +1,48 @@
-<Programa> ::= <Cabecera_programa>
-	<bloque>
-<bloque> ::= <Inicio_de_bloque>
-	<Declar_de_variables_locales>
-	<Declar_de_subprogs>
-	<Sentencias>
-	<Fin_de_bloque>
-<Declar_de_subprogs> ::= <Declar_de_subprogs>
-	<Declar_subprog>
+<Programa> ::= <Cabecera_programa> <bloque>
+<bloque> ::= <Inicio_de_bloque> <Declar_de_variables_locales> <Declar_de_subprogs> <Sentencias> <Fin_de_bloque>
+<Declar_de_subprogs> ::= <Declar_de_subprogs> <Declar_subprog>
 	| ""
-<Declar_subprog> ::= <Cabecera_subprograma>
-	<bloque>
-<Declar_de_variables_locales> ::= <Marca_ini_declar_variables>
-	<Variables_locales>
-	<Marca_fin_declar_variables>
+<Declar_subprog> ::= <Cabecera_subprograma> <bloque>
+<Declar_de_variables_locales> ::= <Marca_ini_declar_variables> <Variables_locales> <Marca_fin_declar_variables>
+<Cabecera_programa> ::= "program" <identificador> ";"
 	| ""
-<Cabecera_programa> ::= (Dependerá del lenguaje de referencia)
-
-
-
+<Marca_ini_declar_variables> ::= "var"
+<Marca_fin_declar_variables> ::= ""
 
 <Inicio_de_bloque> ::= "begin"
 <Fin_de_bloque> ::= "end"
-<Variables_locales> ::= <Variables_locales>
-	<Cuerpo_declar_variables>
+<Variables_locales> ::= <Variables_locales> <Cuerpo_declar_variables>
 	| <Cuerpo_declar_variables>
-<Cuerpo_declar_variables> ::= "var" <variables>
-<variables> ::= <identificador> <variable> ":" "set of integer" ";" <variables>
-	|<identificador> <variable> ":" "set of real" ";" <variables>
-	|<identificador> <variable> ":" "set of character" ";" <variables>
-	|<identificador> <variable> ":" "set of boolean" ";" <variables>
-	|<identificador> <variable> ":" "integer" ";" <variables>
-	|<identificador> <variable> ":" "real" ";" <variables>
-	|<identificador> <variable> ":" "character" ";" <variables>
-	|<identificador> <variable> ":" "boolean" ";" <variables>
-	|<identificador> <variable> ":" "set of integer" ";"
-	|<identificador> <variable> ":" "set of real" ";"
-	|<identificador> <variable> ":" "set of character" ";"
-	|<identificador> <variable> ":" "set of boolean" ";"
-	|<identificador> <variable> ":" "integer" ";"
-	|<identificador> <variable> ":" "real" ";"
-	|<identificador> <variable> ":" "real" ";"
-	|<identificador> <variable> ":" "boolean" ";"
+<Cuerpo_declar_variables> ::= <identificador> <variable> ":" "set of integer" ";"
+	| <identificador> <variable> ":" "set of real" ";"
+	| <identificador> <variable> ":" "set of character" ";"
+	| <identificador> <variable> ":" "set of boolean" ";"
+	| <identificador> <variable> ":" "integer" ";"
+	| <identificador> <variable> ":" "real" ";"
+	| <identificador> <variable> ":" "character" ";"
+	| <identificador> <variable> ":" "boolean" ";"
 <variable> ::= "," <identificador><variable>|""
 
-<Cabecera_subprog> ::= (Dependerá del lenguaje de referencia)
-
+<Cabecera_subprog> ::= "function" <identificador> "(" <lista_argumentos> ")" ":" "set of integer" ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "set of real" ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "set of character" ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "set of boolean" ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "integer" ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "real" ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "character" ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "boolean" ";"
+<lista_argumentos> ::= <lista_argumentos> ";" <Cuerpo_declar_argumentos>
+	| <Cuerpo_declar_argumentos>
+<Cuerpo_declar_argumentos> ::= <identificador> <variable_argumento> ":" "set of integer"
+	| <identificador> <variable_argumento> ":" "set of real"
+	| <identificador> <variable_argumento> ":" "set of character"
+	| <identificador> <variable_argumento> ":" "set of boolean"
+	| <identificador> <variable_argumento> ":" "integer"
+	| <identificador> <variable_argumento> ":" "real"
+	| <identificador> <variable_argumento> ":" "real"
+	| <identificador> <variable_argumento> ":" "boolean"
+<variable_argumento> ::= "," <identificador> <variable_argumento>
+	| ""
 
 <Sentencias> ::= <Sentencias> <Sentencia>
 	| <Sentencia>
@@ -52,108 +50,66 @@
 	| <sentencia_asignacion>
 	| <sentencia_if>
 	| <sentencia_while>
+	| <sentencia_for>
 	| <sentencia_entrada>
 	| <sentencia_salida>
-	| <sentencia_return> (si el lenguaje soporta funciones)
-
-
-	| (Resto de sentencias del lenguaje asignado)
-
-
-<sentencia_asignacion> ::= <identificador>":="<conjuntoEnteros>";"
-	|<identificador>":="<conjuntoReales>";"
-	|<identificador>":="<conjuntoCaracteres>";"
-	|<identificador>":="<conjuntoBooleanos>";"
-	|<identificador>":="<expresionEntera>";"
-	|<identificador>":="<expresionReal>";"
-	|<identificador>":="<expresionBooleana>";"
-	|<identificador>":="<caracter>";"
-<sentencia_if> ::= (Dependerá del lenguaje de referencia)
-
-
-<sentencia_while> ::= (Dependerá del lenguaje de referencia)
-
+	| <sentencia_return>
+<sentencia_asignacion> ::= <identificador>":="<expresion>";"
+<sentencia_if> ::= "if" <expresion> "then" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> "else" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> ";"
+	| "if" <expresion> "then" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> ";"
+<sentencia_while> ::= "while" <expresion> "do" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> ";"
+<sentencia_for> ::= "for" <identificador>":="<expresion> "to" <expresion> "do" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> ";"
 
 <sentencia_entrada> ::= <nomb_entrada> <lista_variables>
+<nomb_entrada> ::= "readln"
 <sentencia_salida> ::= <nomb_salida> <lista_expresiones_o_cadena>
-<expresion> ::= ( <expresion> )
-	| <op_unario> <expresion>
-	| <expresion> <op_binario> <expresion>
+<nomb_salida> ::= "writeln" 
+	|"write"
+
+<sentencia_return> ::= <sentencia_asignacion>
+<expresion> ::= "("<expresion>")"
+	| "+"<expresion>
+	| "-"<expresion>
+	| <expresion>"+"<expresion>
+	| <expresion>"-"<expresion>
+	| <expresion>"*"<expresion>
+	| <expresion>"/"<expresion>
+	| <expresion> ">" <expresion>
+	| <expresion> ">=" <expresion>
+	| <expresion> "<" <expresion>
+	| <expresion> "<=" <expresion>
+	| <expresion> "=" <expresion>
+	| <expresion> "¬=" <expresion>
+	| <expresion> "<>" <expresion>
+	| "not"<expresion>
+	| <expresion>"and"<expresion>
+	| <expresion>"or"<expresion>
+	| <expresion>"xor"<expresion>
+	| <expresion>"in"<expresion>
 	| <identificador>
 	| <constante>
+	| <conjunto>
+
 	| <funcion> (si el lenguaje soporta funciones)
-	| (Resto de expresiones del lenguaje de referencia)
-
-
-
-<conjuntoEnteros> ::= "[]"
-	|"["<expresionEntera> <enteros>"]"
-<enteros> ::= ","<expresionEntera> <enteros>
-	|""
-<conjuntoReales> ::= "[]"
-	|"["<expresionReal> <reales>"]"
-<reales> ::= ","<expresionReal> <reales>
-	|""
-<conjuntoCaracteres> ::= "[]"
-	|"["<caracter> <caracteres>"]"
-<caracteres> ::= ","<caracter> <caracteres>
-	|""
-<conjuntoBooleanos> ::= "[]"
-	|"["<expresionBooleana> <booleanos>"]"
-<booleanos> ::= ","<expresionBooleana> <booleanos>
-	|""
-
-<expresionEntera> ::= "("<expresionEntera>")"
-	|"+"<expresionEntera>
-	|"-"<expresionEntera>
-	|<expresionEntera>"+"<expresionEntera>
-	|<expresionEntera>"-"<expresionEntera>
-	|<expresionEntera>"*"<expresionEntera>
-	|<expresionEntera>"/"<expresionEntera>
-	|<identificador>
-	|<constanteEntera>
-<expresionLogicaEntera> ::= <expresionEntera> ">" <expresionEntera>
-	|<expresionEntera> ">=" <expresionEntera>
-	|<expresionEntera> "<" <expresionEntera>
-	|<expresionEntera> "<=" <expresionEntera>
-	|<expresionEntera> "=" <expresionEntera>
-	|<expresionEntera> "¬=" <expresionEntera>
-	|<expresionEntera> "<>" <expresionEntera>
-<expresionReal> ::= "("<expresionReal>")"
-	|"+"<expresionReal>
-	|"-"<expresionReal>
-	|<expresionReal>"+"<expresionReal>
-	|<expresionReal>"-"<expresionReal>
-	|<expresionReal>"*"<expresionReal>
-	|<expresionReal>"/"<expresionReal>
-	|<identificador>
-	|<coonstanteReal>
-<expresionLogicaReal> ::= <expresionReal> ">" <expresionReal>
-	|<expresionReal> ">=" <expresionReal>
-	|<expresionReal> "<" <expresionReal>
-	|<expresionReal> "<=" <expresionReal>
-	|<expresionReal> "=" <expresionReal>
-	|<expresionReal> "¬=" <expresionReal>
-	|<expresionReal> "<>" <expresionReal>
-<expresionBooleana> ::= "("<expresionBooleana>")"
-	|<expresionBooleana>"and"<expresionBooleana>
-	|<expresionBooleana>"or"<expresionBooleana>
-	|<expresionBooleana>"xor"<expresionBooleana>
-	|"not"<expresionBooleana>
-	|<identificador>
-	|<booleano>
-	|<expresionLogicaEntera>
-	|<expresionLogicaReal>
 
 <identificador> ::= <letra> <restoIdentificador>
-	|"_"<restoIdentificador>
+	| "_"<restoIdentificador>
 <restoIdentificador> ::= <restoIdentificador> <digito>
-	|<restoIdentificador> <letra>
-	|<digito>
-	|<letra>
+	| <restoIdentificador> <letra>
+	| <digito>
+	| <letra>
 
+<conjunto> ::= "[]"
+	| "["<expresion> <restoConjunto>"]"
+<restoConjunto> ::= ","<expresion> <restoConjunto>
+	| ""
+
+<constante> ::= <constanteReal>
+	| <constateEntero>
+	| <caracter>
+	| <booleano>
 <constanteEntera> ::= <constanteEntera> <digito>
-	|<digito>
+	| <digito>
 <constanteReal> ::= <constanteEntera>"."<constanteEntera>
 <caracter> ::= "'"<letra>"'"
 <digito> ::= "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"
@@ -161,4 +117,5 @@
 	|"n"|"o"|"p"|"q"|"r"|"s"|"t"|"u"|"v"|"w"|"x"|"y"|"z"
 	|"A"|"B"|"C"|"D"|"E"|"F"|"G"|"H"|"I"|"J"|"K"|"L"|"M"
 	|"N"|"O"|"P"|"Q"|"R"|"S"|"T"|"U"|"V"|"W"|"X"|"Y"|"Z"
-<booleano> ::= "true"|"false"
+<booleano> ::= "true"
+	| "false"
