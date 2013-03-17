@@ -1,4 +1,7 @@
-<Programa> ::= <Cabecera_programa> <bloque>
+<Programa> ::= <Cabecera_programa> <bloque>"."
+
+
+
 <bloque> ::= <Inicio_de_bloque> <Declar_de_variables_locales> <Declar_de_subprogs> <Sentencias> <Fin_de_bloque>
 <Declar_de_subprogs> ::= <Declar_de_subprogs> <Declar_subprog>
 	| ""
@@ -21,7 +24,8 @@
 	| <identificador> <variable> ":" "real" ";"
 	| <identificador> <variable> ":" "character" ";"
 	| <identificador> <variable> ":" "boolean" ";"
-<variable> ::= "," <identificador><variable>|""
+<variable> ::= "," <identificador><variable>
+    |""
 
 <Cabecera_subprog> ::= "function" <identificador> "(" <lista_argumentos> ")" ":" "set of integer" ";"
 	| "function" <identificador> "(" <lista_argumentos> ")" ":" "set of real" ";"
@@ -54,15 +58,29 @@
 	| <sentencia_entrada>
 	| <sentencia_salida>
 	| <sentencia_return>
-<sentencia_asignacion> ::= <identificador>":="<expresion>";"
+<sentencia_asignacion> ::= <identificador>":="<expresion>";" 
 <sentencia_if> ::= "if" <expresion> "then" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> "else" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> ";"
 	| "if" <expresion> "then" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> ";"
+	| "if" <expresion> "then" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> <sentencia_elseif> "else" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> ";"
+<sentencia_elseif> ::= "else if" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> <sentencia_elseif>       <---------------he visto ejemplos que no tienen begin end en las sentencias if
+    | ""
 <sentencia_while> ::= "while" <expresion> "do" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> ";"
 <sentencia_for> ::= "for" <identificador>":="<expresion> "to" <expresion> "do" <Inicio_de_bloque> <Sentencias> <Fin_de_bloque> ";"
 
-<sentencia_entrada> ::= <nomb_entrada> <lista_variables>
+<sentencia_entrada> ::= <nomb_entrada> "(" <lista_variables> ");"
+<lista_variables> ::= <identificador>
+    | <identificador> "," <lista_variables> 
 <nomb_entrada> ::= "readln"
-<sentencia_salida> ::= <nomb_salida> <lista_expresiones_o_cadena>
+    | "read"
+<sentencia_salida> ::= <nomb_salida> "(" <lista_expresiones_o_cadena> ");"
+
+<lista_expresiones_o_cadena> ::= <identificador>
+    | "," <identificador>
+    | "'"<frase>"'""
+    | "," "'"<frase>"'""
+
+ <frase> ::= <constante> <frase>
+    | <constante>
 <nomb_salida> ::= "writeln" 
 	|"write"
 
@@ -89,28 +107,30 @@
 	| <identificador>
 	| <constante>
 	| <conjunto>
-
-	| <funcion> (si el lenguaje soporta funciones)
+	| <funcion> 
 
 <identificador> ::= <letra> <restoIdentificador>
 	| "_"<restoIdentificador>
+
 <restoIdentificador> ::= <restoIdentificador> <digito>
 	| <restoIdentificador> <letra>
 	| <digito>
 	| <letra>
-
+    | ""
 <conjunto> ::= "[]"
-	| "["<expresion> <restoConjunto>"]"
+	| "["<expresion> <restoConjunto>"]"            <------Yo no he visto que dentro de un conjunto se puedan poner expresiones [A+B]
 <restoConjunto> ::= ","<expresion> <restoConjunto>
+    | <constante>".."<constante>
 	| ""
 
 <constante> ::= <constanteReal>
-	| <constateEntero>
+	| <constateEntera>
 	| <caracter>
 	| <booleano>
+
+<constanteReal> ::= <constanteEntera>"."<constanteEntera>
 <constanteEntera> ::= <constanteEntera> <digito>
 	| <digito>
-<constanteReal> ::= <constanteEntera>"."<constanteEntera>
 <caracter> ::= "'"<letra>"'"
 <digito> ::= "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"
 <letra> ::= "a"|"b"|"c"|"d"|"e"|"f"|"g"|"h"|"i"|"j"|"k"|"l"|"m"
