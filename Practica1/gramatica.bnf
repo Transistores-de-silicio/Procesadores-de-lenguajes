@@ -6,7 +6,9 @@
 <Declar_de_subprogs> ::= <Declar_de_subprogs> <Declar_subprog>
 	| ""
 <Declar_subprog> ::= <Cabecera_subprograma> <bloque>
+ 	| ""
 <Declar_de_variables_locales> ::= <Marca_ini_declar_variables> <Variables_locales> <Marca_fin_declar_variables>
+	|""
 <Cabecera_programa> ::= "program" <identificador> ";"
 	| ""
 <Marca_ini_declar_variables> ::= "var"
@@ -74,9 +76,9 @@
 <sentencia_salida> ::= <nomb_salida> <lista_expresiones_o_cadena>
 
 <lista_expresiones_o_cadena> ::= <identificador>
-    | "," <identificador>
+    | <lista_expresiones_o_cadena> "," <identificador>
     | "'"<frase>"'""
-    | "," "'"<frase>"'""
+    | <lista_expresiones_o_cadena> "," "'"<frase>"'""
 
  <frase> ::= <letra> <frase>
     | <letra>
@@ -85,7 +87,7 @@
 <nomb_salida> ::= "writeln" 
 	|"write"
 
-<funcion> ::= <identificador> ":=" <identificador> "(" <lista_variables> ")" 
+<funcion> ::= <identificador> "(" <lista_variables> ")" 
 
 <sentencia_return> ::= <sentencia_asignacion>
 <expresion> ::= "("<expresion>")"
