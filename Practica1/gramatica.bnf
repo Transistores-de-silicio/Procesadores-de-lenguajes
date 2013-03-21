@@ -121,7 +121,7 @@
 	| <letra>
     | ""
 <conjunto> ::= "[]"
-	| "["<expresion> <restoConjunto>"]"            <------Yo no he visto que dentro de un conjunto se puedan poner expresiones [A+B]
+	| "["<expresion> <restoConjunto>"]"         
 <restoConjunto> ::= ","<expresion> <restoConjunto>
     | <constante>".."<constante>
 	| ""
