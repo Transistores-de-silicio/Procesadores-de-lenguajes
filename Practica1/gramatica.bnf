@@ -75,8 +75,8 @@
     | "read"
 <sentencia_salida> ::= <nomb_salida> <lista_expresiones_o_cadena>
 
-<lista_expresiones_o_cadena> ::= <identificador>
-    | <lista_expresiones_o_cadena> "," <identificador>
+<lista_expresiones_o_cadena> ::= <expresion>
+    | <lista_expresiones_o_cadena> "," <expresion>
     | "'"<frase>"'""
     | <lista_expresiones_o_cadena> "," "'"<frase>"'""
 
@@ -87,7 +87,10 @@
 <nomb_salida> ::= "writeln" 
 	|"write"
 
-<funcion> ::= <identificador> "(" <lista_variables> ")" 
+<funcion> ::= <identificador> "(" <lista_expresiones> ")" 
+
+<lista_expresiones> ::= <expresion>
+	| <lista_expresiones> "," <expresion>
 
 <sentencia_return> ::= <sentencia_asignacion>
 <expresion> ::= "("<expresion>")"
