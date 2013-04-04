@@ -125,10 +125,10 @@
 	| <digito>
 	| <letra>
     | ""
-<conjunto> ::= "[]"
-	| "["<expresion> <restoConjunto>"]"         
-<restoConjunto> ::= ","<expresion> <restoConjunto>
+<conjunto> ::= "["<restoConjunto>"]"         
+<restoConjunto> ::= <expresion> "," <restoConjunto>
     | <constante>".."<constante>
+    |<expresion>
 	| ""
 
 <constante> ::= <constanteReal>
