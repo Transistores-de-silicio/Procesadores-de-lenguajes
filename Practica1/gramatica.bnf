@@ -45,7 +45,7 @@
 	| <identificador> <variable> ":" "set of boolean"
 	| <identificador> <variable> ":" "integer"
 	| <identificador> <variable> ":" "real"
-	| <identificador> <variable> ":" "real"
+	| <identificador> <variable> ":" "character"
 	| <identificador> <variable> ":" "boolean"
 
 
