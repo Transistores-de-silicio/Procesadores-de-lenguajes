@@ -1,7 +1,5 @@
 <Programa> ::= <Cabecera_programa> <bloque>"."
 
-
-
 <bloque> ::= <Inicio_de_bloque> <Declar_de_variables_locales> <Declar_de_subprogs> <Sentencias> <Fin_de_bloque>
 <Declar_de_subprogs> ::= <Declar_de_subprogs> <Declar_subprog>
 	| ""
