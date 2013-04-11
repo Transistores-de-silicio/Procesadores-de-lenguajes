@@ -1,4 +1,4 @@
-<Programa> ::= <Cabecera_programa> <bloque>"."
+<Programa> ::= <Cabecera_programa> <bloque>"PUN"
 
 
 
@@ -9,28 +9,28 @@
  	| ""
 <Declar_de_variables_locales> ::= <Marca_ini_declar_variables> <Variables_locales> <Marca_fin_declar_variables>
 	|""
-<Cabecera_programa> ::= "program" <identificador> ";"
+<Cabecera_programa> ::= "PROGRAM" "IDEN" "PUNCO"
 	| ""
-<Marca_ini_declar_variables> ::= "var"
+<Marca_ini_declar_variables> ::= "VAR"
 <Marca_fin_declar_variables> ::= ""
 
-<Inicio_de_bloque> ::= "begin"
-<Fin_de_bloque> ::= "end"
+<Inicio_de_bloque> ::= "BEGIN"
+<Fin_de_bloque> ::= "END"
 <Variables_locales> ::= <Variables_locales> <Cuerpo_declar_variables>
 	| <Cuerpo_declar_variables>
-<Cuerpo_declar_variables> ::= <identificador> <variable> "TIPO " ";"
+<Cuerpo_declar_variables> ::= "IDEN" <variable> "TIPO " "PUNCO"
 	
-<variable> ::= "," <identificador><variable>
+<variable> ::= "CO" "IDEN"<variable>
     |""
 
-<Cabecera_subprog> ::= "function" <identificador> "(" <lista_argumentos> ")" "TIPO" ";"
+<Cabecera_subprog> ::= "FUNCION" "IDEN" "PAA" <lista_argumentos> "PAC" "TIPO" "PUNCO"
 
-<lista_argumentos> ::= <lista_argumentos> ";" <Cuerpo_declar_argumentos>
+<lista_argumentos> ::= <lista_argumentos> "PUNCO" <Cuerpo_declar_argumentos>
 	| <Cuerpo_declar_argumentos>
-<Cuerpo_declar_argumentos> ::= <identificador> <variable> "TIPO"
+<Cuerpo_declar_argumentos> ::= "IDEN" <variable> "TIPO"
 
 
-<Sentencias> ::= <Sentencias> ";" <Sentencia>
+<Sentencias> ::= <Sentencias> "PUNCO" <Sentencia>
 	| <Sentencia>
 <Sentencia> ::= <bloque>
 	| <sentencia_asignacion>
@@ -40,91 +40,49 @@
 	| <sentencia_entrada>
 	| <sentencia_salida>
 	| <sentencia_return>
-<sentencia_asignacion> ::= <identificador>":="<expresion> 
-<sentencia_if> ::= "if" <expresion> "then" <Sentencia> "else" <Sentencia>
-	| "if" <expresion> "then" <Sentencia> 
-	| "if" <expresion> "then" <Sentencia> <sentencia_elseif> "else" <Sentencia> 
-<sentencia_elseif> ::= "else if" <Sentencia> <sentencia_elseif> 
+<sentencia_asignacion> ::= "IDEN""IGUAL"<expresion> 
+<sentencia_if> ::= "IF" <expresion> "THEN" <Sentencia> "ELSE" <Sentencia>
+	| "IF" <expresion> "THEN" <Sentencia> 
+	| "IF" <expresion> "THEN" <Sentencia> <sentencia_elseif> "ELSE" <Sentencia> 
+<sentencia_elseif> ::= "ELIF" <Sentencia> <sentencia_elseif> 
     | ""
-<sentencia_while> ::= "while" <expresion> "do" <Sentencia>
-<sentencia_for> ::= "for" <identificador>":="<expresion> "to" <expresion> "do" <Sentencias>
+<sentencia_while> ::= "WHILE" <expresion> "DO" <Sentencia>
+<sentencia_for> ::= "FOR" "IDEN""IGUAL"<expresion> "TO" <expresion> "DO" <Sentencias>
 
-<sentencia_entrada> ::= <nomb_entrada> <lista_variables>
-<lista_variables> ::= <identificador>
-    | <identificador> "," <lista_variables> 
-<nomb_entrada> ::= "readln"
-    | "read"
-<sentencia_salida> ::= <nomb_salida> <lista_expresiones_o_cadena>
+<sentencia_entrada> ::= "ENTRADA" <lista_variables>
+<lista_variables> ::= "IDEN"
+    | "IDEN" "CO" <lista_variables> 
+<sentencia_salida> ::= "SALIDA" <lista_expresiones_o_cadena>
 
 <lista_expresiones_o_cadena> ::= <expresion>
-    | <lista_expresiones_o_cadena> "," <expresion>
-    | "'"<frase>"'""
-    | <lista_expresiones_o_cadena> "," "'"<frase>"'""
+    | <lista_expresiones_o_cadena> "CO" <expresion>
+    | "COSIM""FRASE""COSIM""
+    | <lista_expresiones_o_cadena> "CO" "COSIM""FRASE""COSIM""
 
- <frase> ::= <letra> <frase>
-    | <letra>
-    | <digito> <frase>
-    | <digito>
-<nomb_salida> ::= "writeln" 
-	|"write"
+ 
 
-<funcion> ::= <identificador> "(" <lista_expresiones> ")" 
+<funcion> ::= "IDEN" "PAA" <lista_expresiones> "PAC" 
 
 <lista_expresiones> ::= <expresion>
-	| <lista_expresiones> "," <expresion>
+	| <lista_expresiones> "CO" <expresion>
 
 <sentencia_return> ::= <sentencia_asignacion>
-<expresion> ::= "("<expresion>")"
-	| "+"<expresion>
-	| "-"<expresion>
-	| <expresion>"+"<expresion>
-	| <expresion>"-"<expresion>
-	| <expresion>"*"<expresion>
-	| <expresion>"/"<expresion>
-	| <expresion> ">" <expresion>
-	| <expresion> ">=" <expresion>
-	| <expresion> "<" <expresion>
-	| <expresion> "<=" <expresion>
-	| <expresion> "=" <expresion>
-	| <expresion> "¬=" <expresion>
-	| <expresion> "<>" <expresion>
-	| "not"<expresion>
-	| <expresion>"and"<expresion>
-	| <expresion>"or"<expresion>
-	| <expresion>"xor"<expresion>
-	| <expresion>"in"<expresion>
-	| <identificador>
+<expresion> ::= "PAA"<expresion>"PAC"
+	| "OPUN"<expresion>
+	| <expresion>"OPUN"<expresion>
+	| <expresion>"OPBI"<expresion>
+	| "NOT"<expresion>
+	| "IDEN"
 	| <constante>
 	| <conjunto>
 	| <funcion> 
 
-<identificador> ::= <letra> <restoIdentificador>
-	| "_"<restoIdentificador>
 
-<restoIdentificador> ::= <restoIdentificador> <digito>
-	| <restoIdentificador> <letra>
-	| <digito>
-	| <letra>
-    | ""
-<conjunto> ::= "["<restoConjunto>"]"         
-<restoConjunto> ::= <expresion> "," <restoConjunto>
-    | <constante>".."<constante>
+<conjunto> ::= "CORA"<restoConjunto>"CORC"         
+<restoConjunto> ::= <expresion> "CO" <restoConjunto>
+    | <constante>"PUN2"<constante>
     |<expresion>
 	| ""
 
-<constante> ::= <constanteReal>
-	| <constateEntera>
-	| <caracter>
-	| <booleano>
-
-<constanteReal> ::= <constanteEntera>"."<constanteEntera>
-<constanteEntera> ::= <constanteEntera> <digito>
-	| <digito>
-<caracter> ::= "'"<letra>"'"
-<digito> ::= "0"|"1"|"2"|"3"|"4"|"5"|"6"|"7"|"8"|"9"
-<letra> ::= "a"|"b"|"c"|"d"|"e"|"f"|"g"|"h"|"i"|"j"|"k"|"l"|"m"
-	|"n"|"o"|"p"|"q"|"r"|"s"|"t"|"u"|"v"|"w"|"x"|"y"|"z"
-	|"A"|"B"|"C"|"D"|"E"|"F"|"G"|"H"|"I"|"J"|"K"|"L"|"M"
-	|"N"|"O"|"P"|"Q"|"R"|"S"|"T"|"U"|"V"|"W"|"X"|"Y"|"Z"
-<booleano> ::= "true"
-	| "false"
+<constante> ::= "CONS"
+	| "CONSEN"
