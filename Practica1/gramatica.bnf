@@ -5,27 +5,24 @@
 	| ""
 <Declar_subprog> ::= <Cabecera_subprograma> <bloque>
  	| ""
-<Declar_de_variables_locales> ::= <Marca_ini_declar_variables> <Variables_locales> <Marca_fin_declar_variables>
+<Declar_de_variables_locales> ::= <Marca_ini_declar_variables> <Variables_locales>
 	|""
 <Cabecera_programa> ::= "program" <identificador> ";"
 	| ""
 <Marca_ini_declar_variables> ::= "var"
-<Marca_fin_declar_variables> ::= ""
 
 <Inicio_de_bloque> ::= "begin"
 <Fin_de_bloque> ::= "end"
 <Variables_locales> ::= <Variables_locales> <Cuerpo_declar_variables>
 	| <Cuerpo_declar_variables>
-<Cuerpo_declar_variables> ::= <identificador> <variable> ": set of integer " ";"
-	| <identificador> <variable> ": set of real " ";"
-	| <identificador> <variable> ": set of character " ";"
-	| <identificador> <variable> ": set of boolean " ";"
-	| <identificador> <variable> ": integer " ";"
-	| <identificador> <variable> ": real " ";"
-	| <identificador> <variable> ": character " ";"
-	| <identificador> <variable> ": boolean " ";"
-<variable> ::= "," <identificador><variable>
-    |""
+<Cuerpo_declar_variables> ::= <lista_variables> ": set of integer " ";"
+	| <lista_variables> ": set of real " ";"
+	| <lista_variables> ": set of character " ";"
+	| <lista_variables> ": set of boolean " ";"
+	| <lista_variables> ": integer " ";"
+	| <lista_variables> ": real " ";"
+	| <lista_variables> ": character " ";"
+	| <lista_variables> ": boolean " ";"
 
 <Cabecera_subprog> ::= "function" <identificador> "(" <lista_argumentos> ")" ": set of integer " ";"
 	| "function" <identificador> "(" <lista_argumentos> ")" ": set of real " ";"
@@ -37,14 +34,14 @@
 	| "function" <identificador> "(" <lista_argumentos> ")" ": boolean " ";"
 <lista_argumentos> ::= <lista_argumentos> ";" <Cuerpo_declar_argumentos>
 	| <Cuerpo_declar_argumentos>
-<Cuerpo_declar_argumentos> ::= <identificador> <variable> ": set of integer"
-	| <identificador> <variable> ": set of real"
-	| <identificador> <variable> ": set of character"
-	| <identificador> <variable> ": set of boolean"
-	| <identificador> <variable> ": integer"
-	| <identificador> <variable> ": real"
-	| <identificador> <variable> ": character"
-	| <identificador> <variable> ": boolean"
+<Cuerpo_declar_argumentos> ::= <lista_variables> ": set of integer"
+	| <lista_variables> ": set of real"
+	| <lista_variables> ": set of character"
+	| <lista_variables> ": set of boolean"
+	| <lista_variables> ": integer"
+	| <lista_variables> ": real"
+	| <lista_variables> ": character"
+	| <lista_variables> ": boolean"
 
 
 <Sentencias> ::= <Sentencias> ";" <Sentencia>
@@ -61,8 +58,8 @@
 <sentencia_if> ::= "if" <expresion> "then" <Sentencia> "else" <Sentencia>
 	| "if" <expresion> "then" <Sentencia> 
 	| "if" <expresion> "then" <Sentencia> <sentencia_elseif> "else" <Sentencia> 
-<sentencia_elseif> ::= "else if" <Sentencia> <sentencia_elseif> 
-    | ""
+<sentencia_elseif> ::= "else if" <Sentencia> <sentencia_elseif>
+
 <sentencia_while> ::= "while" <expresion> "do" <Sentencia>
 <sentencia_for> ::= "for" <identificador>":="<expresion> "to" <expresion> "do" <Sentencias>
 
@@ -75,8 +72,8 @@
 
 <lista_expresiones_o_cadena> ::= <expresion>
     | <lista_expresiones_o_cadena> "," <expresion>
-    | "'"<frase>"'""
-    | <lista_expresiones_o_cadena> "," "'"<frase>"'""
+    | """<frase>"""
+    | <lista_expresiones_o_cadena> "," """<frase>"""
 
  <frase> ::= <letra> <frase>
     | <letra>

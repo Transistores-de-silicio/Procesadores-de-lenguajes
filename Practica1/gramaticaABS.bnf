@@ -12,22 +12,18 @@
 <Cabecera_programa> ::= "PROGRAM" "IDEN" "PUNCO"
 	| ""
 <Marca_ini_declar_variables> ::= "VAR"
-<Marca_fin_declar_variables> ::= ""
 
 <Inicio_de_bloque> ::= "BEGIN"
 <Fin_de_bloque> ::= "END"
 <Variables_locales> ::= <Variables_locales> <Cuerpo_declar_variables>
 	| <Cuerpo_declar_variables>
-<Cuerpo_declar_variables> ::= "IDEN" <variable> "TIPO " "PUNCO"
-	
-<variable> ::= "CO" "IDEN"<variable>
-    |""
+<Cuerpo_declar_variables> ::= <lista_variables> "TIPO " "PUNCO"
 
 <Cabecera_subprog> ::= "FUNCION" "IDEN" "PAA" <lista_argumentos> "PAC" "TIPO" "PUNCO"
 
 <lista_argumentos> ::= <lista_argumentos> "PUNCO" <Cuerpo_declar_argumentos>
 	| <Cuerpo_declar_argumentos>
-<Cuerpo_declar_argumentos> ::= "IDEN" <variable> "TIPO"
+<Cuerpo_declar_argumentos> ::= <lista_variables> "TIPO"
 
 
 <Sentencias> ::= <Sentencias> "PUNCO" <Sentencia>
@@ -45,7 +41,7 @@
 	| "IF" <expresion> "THEN" <Sentencia> 
 	| "IF" <expresion> "THEN" <Sentencia> <sentencia_elseif> "ELSE" <Sentencia> 
 <sentencia_elseif> ::= "ELIF" <Sentencia> <sentencia_elseif> 
-    | ""
+
 <sentencia_while> ::= "WHILE" <expresion> "DO" <Sentencia>
 <sentencia_for> ::= "FOR" "IDEN""IGUAL"<expresion> "TO" <expresion> "DO" <Sentencias>
 
