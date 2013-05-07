@@ -1,0 +1,20 @@
+Program Vicente 
+var x,y,r:real;
+respuesta: string;
+begin 
+^
+Read(x);
+Read(y);
+z:=x-y;
+^
+if (x<0) then
+begin
+
+	while(x<0) 
+	begin
+		x:=x+1;
+	end
+	
+end
+
+end.
