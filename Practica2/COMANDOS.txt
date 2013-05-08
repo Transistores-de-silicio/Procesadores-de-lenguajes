@@ -1,0 +1,2 @@
+flex -l -i lexico.lex
+gcc lex.yy.c -ly -ll -o nombreSalida

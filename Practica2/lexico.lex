@@ -1,7 +1,6 @@
 %{
 #include "tabla.h"
 	int numero_linea=0;
-	
 %}
 
 letra [a-zA-Z]
@@ -78,4 +77,8 @@ while (val != 0) {
 	val= yylex() ;
 	}
 exit (1);
+}
+int yywrap()
+{
+return(1);
 }
