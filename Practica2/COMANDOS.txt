@@ -1,2 +1,6 @@
 flex -l -i lexico.lex
 gcc lex.yy.c -ly -ll -o nombreSalida
+
+Luego para probar el programa seria:
+
+nombreSalida < ProgramadePrueba > SalidaDelAnalisisLexico
