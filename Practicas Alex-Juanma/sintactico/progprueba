@@ -1,0 +1,40 @@
+inicio {
+	entero ve ;
+	real vf ;
+	caracter vc ;
+	booleano vl ;
+	pila entero pe, pe2, pe3
+	pila real pf, pf2, pf3
+	pila caracter pc, pc2, pc3 ;
+	pila booleano pl ;
+
+	proc fa(entero a,real b, caracter c){
+		proc fb(entero x){
+			proc fx(caracter c){
+				si(c!='2'){
+					entero z;
+					z=(2+3*(4-3));
+				}
+			}
+			x=b+2;
+		}
+		a=b+2;
+	}
+
+	fa(2,3,'2');
+	mientras (a>3 && b<=2 || c==4){
+				si(c!='2'){
+					entero z;
+					z=(2+3*(4-3));
+				}
+		imprimir "hola";
+	}
+	
+	comprobar(a)
+		caso 1:
+			introducir a;
+		fin_caso;
+		caso 2:
+			pc=pc%%verdadero;
+		fin_caso;
+}

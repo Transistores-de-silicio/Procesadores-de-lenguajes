@@ -25,23 +25,23 @@
 	| <lista_variables> ": boolean " ";"
 
 <Cabecera_subprog> ::= "function" <identificador> "(" <lista_argumentos> ")" ": set of integer " ";"
-	| "function" <identificador> "(" <lista_argumentos> ")" ": set of real " ";"
-	| "function" <identificador> "(" <lista_argumentos> ")" ": set of character " ";"
-	| "function" <identificador> "(" <lista_argumentos> ")" ": set of boolean " ";"
-	| "function" <identificador> "(" <lista_argumentos> ")" ": integer " ";"
-	| "function" <identificador> "(" <lista_argumentos> ")" ": real " ";"
-	| "function" <identificador> "(" <lista_argumentos> ")" ": character " ";"
-	| "function" <identificador> "(" <lista_argumentos> ")" ": boolean " ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "set of real " ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "set of character " ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "set of boolean " ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "integer" ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "real" ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "character" ";"
+	| "function" <identificador> "(" <lista_argumentos> ")" ":" "boolean" ";"
 <lista_argumentos> ::= <lista_argumentos> ";" <Cuerpo_declar_argumentos>
 	| <Cuerpo_declar_argumentos>
-<Cuerpo_declar_argumentos> ::= <lista_variables> ": set of integer"
-	| <lista_variables> ": set of real"
-	| <lista_variables> ": set of character"
-	| <lista_variables> ": set of boolean"
-	| <lista_variables> ": integer"
-	| <lista_variables> ": real"
-	| <lista_variables> ": character"
-	| <lista_variables> ": boolean"
+<Cuerpo_declar_argumentos> ::= <lista_variables> ":" "set of integer"
+	| <lista_variables> ":" "set of real"
+	| <lista_variables> ":" "set of character"
+	| <lista_variables> ":" "set of boolean"
+	| <lista_variables> ":" "integer"
+	| <lista_variables> ":" "real"
+	| <lista_variables> ":" "character"
+	| <lista_variables> ":" "boolean"
 
 
 <Sentencias> ::= <Sentencias> ";" <Sentencia>

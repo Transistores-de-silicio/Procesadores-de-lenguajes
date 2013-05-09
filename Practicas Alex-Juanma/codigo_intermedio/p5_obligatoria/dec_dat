@@ -1,0 +1,168 @@
+#include <stdio.h>
+
+/******************************************************************************
+																	DEFINICION PILA
+******************************************************************************/
+
+/*********************\
+ *     _PILAS_        *
+\*********************/
+
+//Una pila es un vector en el cual solo podemos acceder a la ultima posicion pila[n]
+
+/************************\
+* Funciones de Impresión *
+\************************/
+void imprime_pila_int(int *pila){
+}
+
+void imprime_pila_float(float *pila){
+}
+
+void imprime_pila_char(char *pila){
+}
+
+void imprime_pila_bool(bool *pila){
+}
+/*************************\
+* Funciones de Asignación *
+\*************************/
+
+void asignacion_pila_int(int *p1,int *p2){
+}
+
+void asignacion_pila_float(float *p1,float *p2){
+}
+
+void asignacion_pila_char(char *p1,char *p2){
+}
+
+void asignacion_pila_bool(bool *p1,bool *p2){
+}
+
+/*************************\
+*  Operaciones con Pilas  *
+\*************************/
+
+//Añadir un Elemento a la Pila
+void apilar_pila_int(int *p1,int e){
+}
+
+void apilar_pila_float(float *p1,float e){
+}
+
+void apilar_pila_char(char *p1,char e){
+}
+
+void apilar_pila_bool(bool *p1,bool e){
+}
+
+//Sacar un Elemento de la Pila
+void sacar_pila_int(int *ori,int *res){
+}
+
+void sacar_pila_float(float *ori,float *res){
+}
+
+void sacar_pila_char(char *ori,char *res){
+}
+
+void sacar_pila_bool(bool *ori,bool *res){
+}
+
+//Obtener el Tope de la Pila
+void tope_pila_int(int *pila){
+}
+
+void tope_pila_float(float *pila){
+}
+
+void tope_pila_char(char *pila){
+}
+
+void tope_pila_bool(bool *pila){
+}
+
+//Comprobar si la pila esta vacia
+bool pila_int_vacia(int *pila){
+}
+
+bool pila_float_vacia(float *pila){
+}
+
+bool pila_char_vacia(char *pila){
+}
+
+bool pila_bool_vacia(bool *pila){
+}
+
+//Suma: Pila = Pila + Pila
+void SumaPilasInt(int *p1,int *p2,int *res){
+}
+
+void SumaPilasFloat(float *p1,float *p2,float *res){
+}
+
+//Suma: Pila = Pila + Elemento
+void SumaPilaElementoInt(int *p1,int e,int *res){
+}
+
+void SumaPilaElementoFloat(float *p1,float e,float *res){
+}
+
+//Suma: Pila = Elemento + Pila (suma de Elemento con todos los elementos de la Pila)
+void SumaPilaTodosElementoInt(int *p1,int e,int *res){
+}
+
+void SumaPilaTodosElementoFloat(float *p1,float e,float *res){
+}
+
+//Resta: Pila = Pila - Pila
+void RestaPilasInt(int *p1,int *p2,int *res){
+}
+
+void RestaPilasFloat(float *p1,float *p2,float *res){
+}
+
+//Resta: Pila = Pila - Elemento
+void RestaPilaElementoInt(int *p1,int e,int *res){
+}
+
+void RestaPilaElementoFloat(float *p1,float e,float *res){
+}
+
+//Multiplicacion: Pila = Elemento * Pila (producto de Elemento con todos los elementos de la Pila)
+void MultiplicacionPilaTodosElementoInt(int *p1,int e,int *res){
+}
+
+void MultiplicacionPilaTodosElementoFloat(float *p1,float e,float *res){
+}
+
+//Multiplicacion: Pila = Pila * Elemento
+void MultiplicacionPilaElementoInt(int *p1,int e,int *res){
+}
+
+void MultiplicacionPilaElementoFloat(float *p1,float e,float *res){
+}
+
+//Multiplicacion: Pila = Pila * Pila (Elemento a Elemento)
+void MultiplicacionPilasInt(int *p1,int *p2,int *res){
+}
+
+void MultiplicacionPilasFloat(int *p1,int *p2,int *res){
+}
+
+//Division: Pila = Pila / Elemento
+void DivisionPilaElementoInt(int *p1,int e,int *res){
+}
+
+void DivisionPilaElementoFloat(float *p1,float e,float *res){
+}
+
+//Division: Pila = Pila / Pila (Elemento a Elemento)
+void DivisionPilasInt(int *p1,int *p2,int *res){
+}
+
+void DivisionPilasFloat(int *p1,int *p2,int *res){
+}
+

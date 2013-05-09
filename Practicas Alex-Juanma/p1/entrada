@@ -1,0 +1,13 @@
+inicio{
+
+entero numero, aux;
+pila entero ok;
+aux=0;
+mientras(aux!=3){
+
+	imprimir "cadena%";
+	aux= aux+1*3;
+$$$
+}
+
+}

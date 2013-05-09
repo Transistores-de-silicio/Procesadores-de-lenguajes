@@ -1,0 +1,45 @@
+inicio {
+	entero n,curr;
+	
+	proc fa(){
+		entero x;
+		
+		proc fb(entero a){
+			entero b;
+			b=a+2;
+			imprimir "b= " b "\n";
+		}
+		
+		imprimir "fa() \n";
+		x=2;
+		fb(x+3);
+	}
+	
+	proc fc(){
+		entero a;
+		a=1;
+		imprimir "GUARDADOS TODOS LOS PROCS \n";
+		si (a<2*a) 
+		   imprimir "dentro del si\n";
+	}
+	
+	fa();
+	
+	imprimir "Introduzca un numero: \n";
+	introducir n;
+	curr=2;
+	imprimir "Sus factores primos son: \n";
+	mientras(curr<=n){
+		entero d;
+		d=n/curr;
+		si((d*curr)==n){
+			imprimir curr;
+			imprimir " ";
+			n=n/curr;
+		}
+		en otro caso{
+			curr=curr+1-1+1;
+		}
+	}
+	imprimir "1\n";
+}

@@ -1,0 +1,1012 @@
+#include <stdio.h>
+
+/******************************************************************************
+																	DEFINICION PILA
+******************************************************************************/
+
+/*********************\
+ *     _PILAS_        *
+\*********************/
+
+//Una pila es un vector en el cual solo podemos acceder a la ultima posicion pila[n]
+
+typedef struct{
+	int * vector;
+	int tope;
+	int tam;
+}pila_entero;
+
+typedef struct{
+	int * vector;
+	int tope;
+	int tam;
+}pila_booleano;
+
+typedef struct{
+	float * vector;
+	int tope;
+	int tam;
+}pila_real;
+
+typedef struct{
+	char * vector;
+	int tope;
+	int tam;
+}pila_caracter;
+
+void inicializa_entero_sin_parametros(pila_entero * p){
+	p->tope=0;
+	p->tam=100;
+	p->vector = malloc(100);
+}
+
+void inicializa_entero_con_parametros(pila_entero * p,int tam){
+	p->tope=0;
+	p->tam=tam;
+	p->vector = malloc(tam);
+}
+
+void agrandar_entero(pila_entero * p){
+	int i;
+	
+	int * aux;
+	
+	aux = malloc(p->tam*2);
+	
+	for(i=0; i < p->tam; i++){
+		aux[i] = p->vector[i];
+	}
+	
+	p->vector = aux;
+
+}
+
+pila_entero insertar_entero(pila_entero * p, int a){
+	if(p->tope < p->tam){
+		p->vector[p->tope] = a;
+		p->tope++;
+	}
+	else{
+	    agrandar_entero(p);
+		p->vector[p->tope] = a;
+		p->tope++;
+	}
+	return *p;
+}
+
+pila_entero sacar_entero(pila_entero * p){
+	if(p->tope > 0)
+		p->tope--;
+	return *p;
+}
+
+int tope_entero(pila_entero p){
+	return p.vector[p.tope];
+}
+
+int vacia_entero(pila_entero p){
+	if(p.tope == 0)
+		return 1;
+	else
+		return 0;
+}
+
+pila_entero producto_pp_entero(pila_entero p1,pila_entero p2){
+	pila_entero aux;
+	
+	inicializa_entero_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_entero_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_entero(&aux,p1.vector[i]*p2.vector[i]);
+		
+	}
+		
+	return aux;
+
+}
+
+pila_entero producto_pi_entero(pila_entero p1,int p2){
+	pila_entero aux;
+	
+	inicializa_entero_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_entero(&aux,p1.vector[i]*p2);
+		
+	return aux;
+
+}
+
+pila_entero producto_ip_entero(int p1,pila_entero p2){
+	pila_entero aux;
+	
+	inicializa_entero_con_parametros(&aux,p2.tam);
+	
+	int i=0;
+	
+	for(i; i < p2.tope; i++)
+		insertar_entero(&aux,p1*p2.vector[i]);
+		
+	return aux;
+
+}
+
+pila_entero suma_pp_entero(pila_entero p1,pila_entero p2){
+	pila_entero aux;
+	
+	inicializa_entero_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_entero_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_entero(&aux,p1.vector[i]+p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_entero suma_pi_entero(pila_entero p1,int p2){
+	pila_entero aux;
+	
+	inicializa_entero_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_entero(&aux,p1.vector[i]+p2);
+		
+	return aux;
+
+}
+
+pila_entero suma_ip_entero(int p1,pila_entero p2){
+	pila_entero aux;
+	inicializa_entero_con_parametros(&aux,p2.tam);
+	
+	int i=0;
+	
+	for(i; i < p2.tope; i++)
+		insertar_entero(&aux,p1+p2.vector[i]);
+		
+	return aux;
+
+}
+
+pila_entero resta_pp_entero(pila_entero p1,pila_entero p2){
+	pila_entero aux;
+	inicializa_entero_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_entero_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_entero(&aux,p1.vector[i]-p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_entero resta_pi_entero(pila_entero p1,int p2){
+	pila_entero aux;
+	inicializa_entero_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_entero(&aux,p1.vector[i]-p2);
+		
+	return aux;
+
+}
+
+
+pila_entero division_pp_entero(pila_entero p1,pila_entero p2){
+	pila_entero aux;
+	
+	inicializa_entero_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_entero_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_entero(&aux,p1.vector[i]/p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_entero division_pi_entero(pila_entero p1,int p2){
+	pila_entero aux;
+	
+	inicializa_entero_sin_parametros(&aux);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_entero(&aux,p1.vector[i]/p2);
+		
+	return aux;
+
+}
+
+void inicializa_caracter_sin_parametros(pila_caracter * p){
+	p->tope=0;
+	p->tam=100;
+	p->vector = malloc(100);
+}
+
+void inicializa_caracter_con_parametros(pila_caracter * p,int tam){
+	p->tope=0;
+	p->tam=tam;
+	p->vector = malloc(tam);
+}
+
+void agrandar_caracter(pila_caracter * p){
+	int i;
+	
+	char * aux;
+	
+	aux = malloc(p->tam*2);
+	
+	for(i=0; i < p->tam; i++){
+		aux[i] = p->vector[i];
+	}
+	
+	p->vector = aux;
+
+}
+
+pila_caracter insertar_caracter(pila_caracter * p, char a){
+	if(p->tope < p->tam){
+		p->vector[p->tope] = a;
+		p->tope++;
+	}
+	else{
+	    agrandar_caracter(p);
+		p->vector[p->tope] = a;
+		p->tope++;
+	}
+	return *p;
+}
+
+
+pila_caracter sacar_caracter(pila_caracter * p){
+	if(p->tope > 0)
+		p->tope--;
+	return *p;
+}
+
+int tope_caracter(pila_caracter p){
+	return p.vector[p.tope];
+}
+
+int vacia_caracter(pila_caracter p){
+	if(p.tope == 0)
+		return 1;
+	else
+		return 0;
+}
+
+pila_caracter producto_pp_caracter(pila_caracter p1,pila_caracter p2){
+	pila_caracter aux;
+	
+	inicializa_caracter_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_caracter_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_caracter(&aux,p1.vector[i]*p2.vector[i]);
+		
+	}
+		
+	return aux;
+
+}
+
+pila_caracter producto_pi_caracter(pila_caracter p1,char p2){
+	pila_caracter aux;
+	
+	inicializa_caracter_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_caracter(&aux,p1.vector[i]*p2);
+		
+	return aux;
+
+}
+
+pila_caracter producto_ip_caracter(char p1,pila_caracter p2){
+	pila_caracter aux;
+	
+	inicializa_caracter_con_parametros(&aux,p2.tam);
+	
+	int i=0;
+	
+	for(i; i < p2.tope; i++)
+		insertar_caracter(&aux,p1*p2.vector[i]);
+		
+	return aux;
+
+}
+
+pila_caracter suma_pp_caracter(pila_caracter p1,pila_caracter p2){
+	pila_caracter aux;
+	
+	inicializa_caracter_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_caracter_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_caracter(&aux,p1.vector[i]+p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_caracter suma_pi_caracter(pila_caracter p1,char p2){
+	pila_caracter aux;
+	
+	inicializa_caracter_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_caracter(&aux,p1.vector[i]+p2);
+		
+	return aux;
+
+}
+
+pila_caracter suma_ip_caracter(char p1,pila_caracter p2){
+	pila_caracter aux;
+	inicializa_caracter_con_parametros(&aux,p2.tam);
+	
+	int i=0;
+	
+	for(i; i < p2.tope; i++)
+		insertar_caracter(&aux,p1+p2.vector[i]);
+		
+	return aux;
+
+}
+
+pila_caracter resta_pp_caracter(pila_caracter p1,pila_caracter p2){
+	pila_caracter aux;
+	inicializa_caracter_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_caracter_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_caracter(&aux,p1.vector[i]-p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_caracter resta_pi_caracter(pila_caracter p1,char p2){
+	pila_caracter aux;
+	inicializa_caracter_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_caracter(&aux,p1.vector[i]-p2);
+		
+	return aux;
+
+}
+
+
+pila_caracter division_pp_caracter(pila_caracter p1,pila_caracter p2){
+	pila_caracter aux;
+	
+	inicializa_caracter_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_caracter_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_caracter(&aux,p1.vector[i]/p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_caracter division_pi_caracter(pila_caracter p1,char p2){
+	pila_caracter aux;
+	
+	inicializa_caracter_sin_parametros(&aux);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_caracter(&aux,p1.vector[i]/p2);
+		
+	return aux;
+
+}
+
+void inicializa_real_sin_parametros(pila_real * p){
+	p->tope=0;
+	p->tam=100;
+	p->vector = malloc(100);
+}
+
+void inicializa_real_con_parametros(pila_real * p,int tam){
+	p->tope=0;
+	p->tam=tam;
+	p->vector = malloc(tam);
+}
+
+void agrandar_real(pila_real * p){
+	int i;
+	
+	float * aux;
+	
+	aux = malloc(p->tam*2);
+	
+	for(i=0; i < p->tam; i++){
+		aux[i] = p->vector[i];
+	}
+	
+	p->vector = aux;
+
+}
+
+pila_real insertar_real(pila_real * p, float a){
+	if(p->tope < p->tam){
+		p->vector[p->tope] = a;
+		p->tope++;
+	}
+	else{
+	    agrandar_real(p);
+		p->vector[p->tope] = a;
+		p->tope++;
+	}
+	return *p;
+}
+
+
+pila_real sacar_real(pila_real * p){
+	if(p->tope > 0)
+		p->tope--;
+	return *p;
+}
+
+int tope_real(pila_real p){
+	return p.vector[p.tope];
+}
+
+int vacia_real(pila_real p){
+	if(p.tope == 0)
+		return 1;
+	else
+		return 0;
+}
+
+pila_real producto_pp_real(pila_real p1,pila_real p2){
+	pila_real aux;
+	
+	inicializa_real_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_real_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_real(&aux,p1.vector[i]*p2.vector[i]);
+		
+	}
+		
+	return aux;
+
+}
+
+pila_real producto_pi_real(pila_real p1,float p2){
+	pila_real aux;
+	
+	inicializa_real_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_real(&aux,p1.vector[i]*p2);
+		
+	return aux;
+
+}
+
+pila_real producto_ip_real(float p1,pila_real p2){
+	pila_real aux;
+	
+	inicializa_real_con_parametros(&aux,p2.tam);
+	
+	int i=0;
+	
+	for(i; i < p2.tope; i++)
+		insertar_real(&aux,p1*p2.vector[i]);
+		
+	return aux;
+
+}
+
+pila_real suma_pp_real(pila_real p1,pila_real p2){
+	pila_real aux;
+	
+	inicializa_real_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_real_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_real(&aux,p1.vector[i]+p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_real suma_pi_real(pila_real p1,float p2){
+	pila_real aux;
+	
+	inicializa_real_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_real(&aux,p1.vector[i]+p2);
+		
+	return aux;
+
+}
+
+pila_real suma_ip_real(float p1,pila_real p2){
+	pila_real aux;
+	inicializa_real_con_parametros(&aux,p2.tam);
+	
+	int i=0;
+	
+	for(i; i < p2.tope; i++)
+		insertar_real(&aux,p1+p2.vector[i]);
+		
+	return aux;
+
+}
+
+pila_real resta_pp_real(pila_real p1,pila_real p2){
+	pila_real aux;
+	inicializa_real_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_real_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_real(&aux,p1.vector[i]-p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_real resta_pi_real(pila_real p1,float p2){
+	pila_real aux;
+	inicializa_real_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_real(&aux,p1.vector[i]-p2);
+		
+	return aux;
+
+}
+
+
+pila_real division_pp_real(pila_real p1,pila_real p2){
+	pila_real aux;
+	
+	inicializa_real_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_real_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_real(&aux,p1.vector[i]/p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_real division_pi_real(pila_real p1,float p2){
+	pila_real aux;
+	
+	inicializa_real_sin_parametros(&aux);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_real(&aux,p1.vector[i]/p2);
+		
+	return aux;
+
+}
+
+void inicializa_booleano_sin_parametros(pila_booleano * p){
+	p->tope=0;
+	p->tam=100;
+	p->vector = malloc(100);
+}
+
+void inicializa_booleano_con_parametros(pila_booleano * p,int tam){
+	p->tope=0;
+	p->tam=tam;
+	p->vector = malloc(tam);
+}
+
+void agrandar_booleano(pila_booleano * p){
+	int i;
+	
+	int * aux;
+	
+	aux = malloc(p->tam*2);
+	
+	for(i=0; i < p->tam; i++){
+		aux[i] = p->vector[i];
+	}
+	
+	p->vector = aux;
+
+}
+
+pila_booleano insertar_booleano(pila_booleano * p, int a){
+	if(p->tope < p->tam){
+		p->vector[p->tope] = a;
+		p->tope++;
+	}
+	else{
+	    agrandar_booleano(p);
+		p->vector[p->tope] = a;
+		p->tope++;
+	}
+	return *p;
+}
+
+
+pila_booleano sacar_booleano(pila_booleano * p){
+	if(p->tope > 0)
+		p->tope--;
+	return *p;
+}
+
+int tope_booleano(pila_booleano p){
+	return p.vector[p.tope];
+}
+
+int vacia_booleano(pila_booleano p){
+	if(p.tope == 0)
+		return 1;
+	else
+		return 0;
+}
+
+pila_booleano producto_pp_booleano(pila_booleano p1,pila_booleano p2){
+	pila_booleano aux;
+	
+	inicializa_booleano_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_booleano_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_booleano(&aux,p1.vector[i]*p2.vector[i]);
+		
+	}
+		
+	return aux;
+
+}
+
+pila_booleano producto_pi_booleano(pila_booleano p1,int p2){
+	pila_booleano aux;
+	
+	inicializa_booleano_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_booleano(&aux,p1.vector[i]*p2);
+		
+	return aux;
+
+}
+
+pila_booleano producto_ip_booleano(int p1,pila_booleano p2){
+	pila_booleano aux;
+	
+	inicializa_booleano_con_parametros(&aux,p2.tam);
+	
+	int i=0;
+	
+	for(i; i < p2.tope; i++)
+		insertar_booleano(&aux,p1*p2.vector[i]);
+		
+	return aux;
+
+}
+
+pila_booleano suma_pp_booleano(pila_booleano p1,pila_booleano p2){
+	pila_booleano aux;
+	
+	inicializa_booleano_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_booleano_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_booleano(&aux,p1.vector[i]+p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_booleano suma_pi_booleano(pila_booleano p1,int p2){
+	pila_booleano aux;
+	
+	inicializa_booleano_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_booleano(&aux,p1.vector[i]+p2);
+		
+	return aux;
+
+}
+
+pila_booleano suma_ip_booleano(int p1,pila_booleano p2){
+	pila_booleano aux;
+	inicializa_booleano_con_parametros(&aux,p2.tam);
+	
+	int i=0;
+	
+	for(i; i < p2.tope; i++)
+		insertar_booleano(&aux,p1+p2.vector[i]);
+		
+	return aux;
+
+}
+
+pila_booleano resta_pp_booleano(pila_booleano p1,pila_booleano p2){
+	pila_booleano aux;
+	inicializa_booleano_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_booleano_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_booleano(&aux,p1.vector[i]-p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_booleano resta_pi_booleano(pila_booleano p1,int p2){
+	pila_booleano aux;
+	inicializa_booleano_con_parametros(&aux,p1.tam);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_booleano(&aux,p1.vector[i]-p2);
+		
+	return aux;
+
+}
+
+
+pila_booleano division_pp_booleano(pila_booleano p1,pila_booleano p2){
+	pila_booleano aux;
+	
+	inicializa_booleano_sin_parametros(&aux);
+	
+	int i=0;
+	
+	if(p1.tope == p2.tope){
+	
+		inicializa_booleano_con_parametros(&aux,p1.tam);
+		
+		for(i; i < p1.tope; i++)
+			insertar_booleano(&aux,p1.vector[i]/p2.vector[i]);
+	}
+			
+	return aux;
+
+}
+
+pila_booleano division_pi_booleano(pila_booleano p1,int p2){
+	pila_booleano aux;
+	
+	inicializa_booleano_sin_parametros(&aux);
+	
+	int i=0;
+	
+	for(i; i < p1.tope; i++)
+		insertar_booleano(&aux,p1.vector[i]/p2);
+		
+	return aux;
+
+}
+
+/************************\
+* Funciones de Impresión *
+\************************/
+
+void imprimir_entero(pila_entero p){
+     
+    int i; 
+     
+	for(i=0; i < p.tope; i++){
+		printf("%i ",p.vector[i]);
+	}
+	printf("\n");
+}
+
+void imprimir_real(pila_real p){
+     
+    int i; 
+     
+	for(i=0; i < p.tope; i++){
+		printf("%f ",p.vector[i]);
+	}
+	printf("\n");
+}
+
+
+void imprimir_caracter(pila_caracter p){
+     
+    int i; 
+     
+	for(i=0; i < p.tope; i++){
+		printf("%c ",p.vector[i]);
+	}
+	printf("\n");
+}
+
+void imprimir_booleano(pila_booleano p){
+     
+    int i; 
+     
+	for(i=0; i < p.tope; i++){
+		printf("%i ",p.vector[i]);
+	}
+	printf("\n");
+}
+
+
+/*************************\
+* Funciones de Asignación *
+\*************************/
+
+pila_entero insertar_agregados_entero(int * vector, int tam){
+	pila_entero aux;
+	
+    int i;
+	
+	inicializa_entero_con_parametros(&aux,tam*2);
+	
+	for(i=tam-1; i >= 0; i--)
+		insertar_entero(&aux,vector[i]);
+		
+	return aux;
+}
+
+pila_caracter insertar_agregados_caracter(char * vector, int tam){
+	pila_caracter aux;
+	
+    int i;	
+	
+	inicializa_caracter_con_parametros(&aux,tam*2);
+	
+	for(i=tam-1; i >= 0; i--)
+		insertar_caracter(&aux,vector[i]);
+		
+	return aux;
+}
+
+pila_real insertar_agregados_real(float * vector, int tam){
+	pila_real aux;
+	
+    int i;	
+	
+	inicializa_real_con_parametros(&aux,tam*2);
+	
+	for(i=tam-1; i >= 0; i--)
+		insertar_real(&aux,vector[i]);
+		
+	return aux;
+}
+
+pila_booleano insertar_agregados_booleano(int * vector, int tam){
+	pila_booleano aux;
+	
+    int i;	
+	
+	inicializa_booleano_con_parametros(&aux,tam*2);
+	
+	for(i=tam-1; i >= 0; i--)
+		insertar_booleano(&aux,vector[i]);
+		
+	return aux;
+}
+
+
+
+/*************************\
+*  Operaciones con Pilas  *
+\*************************/
+
+

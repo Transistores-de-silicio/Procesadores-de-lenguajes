@@ -1,22 +1,23 @@
 %{
 #include "tabla.h"
-	int numero_linea=0;
+	int numero_linea=1;
 %}
-
+blanco [ \t]
 letra [a-zA-Z]
 digito [0-9]
 boolean ("true"|"false")
 otros .
 %%
-
-": set of integer" return TIPO;
-": set of real" return TIPO; 
-": set of character" return TIPO; 
-": set of boolean" return TIPO;
-": integer"  return TIPO;
-": real" return TIPO;
-": character" return TIPO;
-": boolean" return TIPO;
+{blanco}+ ;
+":" return DOSPUN;
+"set of integer" return TIPO;
+"set of real" return TIPO; 
+"set of character" return TIPO; 
+"set of boolean" return TIPO;
+"integer"  return TIPO;
+"real" return TIPO;
+"character" return TIPO;
+"boolean" return TIPO;
 ">"		    return OPBI;
 ">="		return OPBI;
 "<"		    return OPBI;
@@ -36,8 +37,6 @@ otros .
 ","			return CO;
 "("			return PAA;
 ")"			return PAC;
-"'"			return COSIM;
-\"			return CODOB;
 "for"			return FOR;
 ":="			return IGUAL;
 "to"			return TO;
@@ -59,14 +58,15 @@ otros .
 "]"			return CORC;
 ("writeln"|"write") return SALIDA;
 ("readln"|"read") return ENTRADA;
-({letra}|{digito})+ return FRASE;
 
-("'"{letra}"'"|{boolean}|{digito}+"."{digito}+)	  return CONS;
+
+("'"[^"'"]"'"|{boolean}|{digito}+"."{digito}+)	  return CONS;
 
 {digito}+    return CONSEN;
 ({letra}|"_")({letra}|{digito})* return IDEN;
+\"[^\"]*\" return FRASE;
 "\n" ++numero_linea;
-{otros} printf("\n(Linea %d) Error léxico: Lexema %s\n", numero_linea, yytext);
+{otros} printf("\nEn la linea %d, Detectado Error lexico: Lexema %s\n", numero_linea, yytext);
 
 %%
 main () {

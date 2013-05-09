@@ -17,9 +17,9 @@
 <Fin_de_bloque> ::= "END"
 <Variables_locales> ::= <Variables_locales> <Cuerpo_declar_variables>
 	| <Cuerpo_declar_variables>
-<Cuerpo_declar_variables> ::= <lista_variables> "TIPO " "PUNCO"
+<Cuerpo_declar_variables> ::= <lista_variables> "DOSPUN" "TIPO " "PUNCO"
 
-<Cabecera_subprog> ::= "FUNCION" "IDEN" "PAA" <lista_argumentos> "PAC" "TIPO" "PUNCO"
+<Cabecera_subprog> ::= "FUNCION" "IDEN" "PAA" <lista_argumentos> "PAC" "DOSPUN" "TIPO" "PUNCO"
 
 <lista_argumentos> ::= <lista_argumentos> "PUNCO" <Cuerpo_declar_argumentos>
 	| <Cuerpo_declar_argumentos>

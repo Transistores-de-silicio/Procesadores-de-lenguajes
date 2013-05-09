@@ -1,0 +1,42 @@
+#include <stdio.h>
+
+
+void fa(){
+int x;
+
+
+void fb(int a){
+int b;
+
+int temp0;
+temp0 = a + 2;
+b = temp0;
+
+printf("%s","b= ");
+printf("%d",b);
+printf("%s","\n");
+}
+printf("%s","fa() \n");
+x = 2;
+
+int temp1;
+temp1 = x + 3;
+
+fb(2);
+}
+
+void fc(){
+int a;
+
+a = 1;
+
+printf("%s","GUARDADOS TODOS LOS PROCS \n");
+int temp2;
+temp2 = 2 * a;
+int temp3;
+temp3 = a < temp2;
+if(!temp3)goto etiqueta1;
+
+printf("%s","dentro del si\n");
+etiqueta1:
+;}

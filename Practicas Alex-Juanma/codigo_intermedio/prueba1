@@ -1,0 +1,14 @@
+inicio {
+	entero b;
+
+	pila entero pa;
+	pila entero pb;
+	pila entero pc;
+	
+	pa=pa%%2;
+	pb=pb%%2;
+	
+	pc=pa+pb;
+	
+	
+}

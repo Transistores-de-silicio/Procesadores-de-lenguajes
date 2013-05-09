@@ -1,0 +1,2047 @@
+Estado 73 conflictos: 1 desplazamiento(s)/reducción(ones)
+Estado 113 conflictos: 1 desplazamiento(s)/reducción(ones)
+
+
+Gramática
+
+    0 $accept: programa $end
+
+    1 programa: cabecera_programa bloque
+
+    2 cabecera_programa: CABPROG
+    3                  | error
+
+    4 $@1: /* vacío */
+
+    5 bloque: INIBLOQUE $@1 variables_locales declar_de_subprogs sentencias FINBLOQUE
+
+    6 variables_locales: variables_locales cuerpo_declar_variables
+    7                  | /* vacío */
+
+    8 cuerpo_declar_variables: TIPO declar_variables FINLINEA
+
+    9 declar_variables: IDENTIFICADOR
+   10                 | declar_variables COMA IDENTIFICADOR
+   11                 | error
+
+   12 declar_de_subprogs: declar_de_subprogs declar_de_subprog
+   13                   | /* vacío */
+
+   14 declara_args: argumento
+   15             | argumento COMA declara_args
+   16             | error
+
+   17 argumento: TIPO IDENTIFICADOR
+
+   18 declar_de_subprog: cabecera_subprog bloque
+
+   19 $@2: /* vacío */
+
+   20 $@3: /* vacío */
+
+   21 cabecera_subprog: PROC IDENTIFICADOR PARIZQ $@2 declara_args $@3 PARDER
+   22                 | PROC IDENTIFICADOR PARIZQ PARDER
+
+   23 sentencias: sentencias sentencia
+   24           | /* vacío */
+
+   25 sentencia: bloque
+   26          | sentencia_asignacion
+   27          | sentencia_if
+   28          | sentencia_while
+   29          | sentencia_entrada
+   30          | sentencia_salida
+   31          | sentencia_switch
+   32          | llamada_proced
+   33          | error
+
+   34 sentencia_asignacion: IDENTIFICADOR IGUAL expresion FINLINEA
+
+   35 sentencia_if: COND PARIZQ expresion PARDER sentencia sentencia_else
+
+   36 sentencia_else: ELSE sentencia
+   37               | /* vacío */
+
+   38 sentencia_while: MIENT PARIZQ expresion PARDER sentencia
+
+   39 sentencia_entrada: ENTRADA identificadores FINLINEA
+
+   40 identificadores: IDENTIFICADOR
+   41                | identificadores COMA IDENTIFICADOR
+   42                | error
+
+   43 sentencia_salida: SALIDA lista_expresiones_o_cadena FINLINEA
+
+   44 lista_expresiones_o_cadena: lista_expresiones_o_cadena expresion
+   45                           | lista_expresiones_o_cadena CONST_CAD
+   46                           | /* vacío */
+
+   47 sentencia_switch: COMP PARIZQ IDENTIFICADOR PARDER sentencia_case
+
+   48 sentencia_case: CASO literal DOSPUNT sentencias FINCASO FINLINEA
+   49               | CASO literal DOSPUNT sentencias FINCASO FINLINEA sentencia_default
+   50               | sentencia_case CASO literal DOSPUNT sentencias FINCASO FINLINEA
+
+   51 sentencia_default: DEFECTO DOSPUNT sentencias FINCASO FINLINEA
+
+   52 llamada_proced: IDENTIFICADOR PARIZQ PARDER FINLINEA
+
+   53 $@4: /* vacío */
+
+   54 llamada_proced: IDENTIFICADOR PARIZQ $@4 param_llamada PARDER FINLINEA
+
+   55 param_llamada: param_llamada COMA expresion
+   56              | expresion
+
+   57 expresion: PARIZQ expresion PARDER
+   58          | OPUNA expresion
+   59          | OP_PILA expresion
+   60          | expresion OPMULTDIV expresion
+   61          | expresion SUMRES expresion
+   62          | expresion OP_RELACIONAL expresion
+   63          | expresion OR expresion
+   64          | expresion AND expresion
+   65          | expresion XOR expresion
+   66          | expresion IGUALDAD expresion
+   67          | expresion INS_ELEM expresion
+   68          | IDENTIFICADOR
+   69          | literal
+   70          | agregados_pila
+   71          | SUMRES expresion
+   72          | error
+
+   73 agregados_pila: INIBLOQUE FINBLOQUE
+   74               | INIBLOQUE valores_pila FINBLOQUE
+
+   75 valores_pila: IDENTIFICADOR
+   76             | literal
+   77             | valores_pila COMA literal
+
+   78 literal: CONST_INT
+   79        | CONST_REAL
+   80        | CONST_CHAR
+   81        | CONST_BOOLEAN
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+error (256) 3 11 16 33 42 72
+CABPROG (258) 2
+OP_RELACIONAL (259) 62
+INIBLOQUE (260) 5 73 74
+FINBLOQUE (261) 5 73 74
+PARIZQ (262) 21 22 35 38 47 52 54 57
+PARDER (263) 21 22 35 38 47 52 54 57
+COMA (264) 10 15 41 55 77
+FINLINEA (265) 8 34 39 43 48 49 50 51 52 54
+COND (266) 35
+ELSE (267) 36
+MIENT (268) 38
+IGUAL (269) 34
+ENTRADA (270) 39
+SALIDA (271) 43
+OPUNA (272) 58
+OP_PILA (273) 59
+OPMULTDIV (274) 60
+IGUALDAD (275) 66
+AND (276) 64
+OR (277) 63
+XOR (278) 65
+SUMRES (279) 61 71
+INS_ELEM (280) 67
+PROC (281) 21 22
+COMP (282) 47
+CASO (283) 48 49 50
+DEFECTO (284) 51
+FINCASO (285) 48 49 50 51
+DOSPUNT (286) 48 49 50 51
+TIPO (287) 8 17
+IDENTIFICADOR (288) 9 10 17 21 22 34 40 41 47 52 54 68 75
+CONST_BOOLEAN (289) 81
+CONST_INT (290) 78
+CONST_REAL (291) 79
+CONST_CHAR (292) 80
+CONST_CAD (293) 45
+
+
+No terminales con las reglas donde aparecen
+
+$accept (39)
+    en la izquierda: 0
+programa (40)
+    en la izquierda: 1, en la derecha: 0
+cabecera_programa (41)
+    en la izquierda: 2 3, en la derecha: 1
+bloque (42)
+    en la izquierda: 5, en la derecha: 1 18 25
+$@1 (43)
+    en la izquierda: 4, en la derecha: 5
+variables_locales (44)
+    en la izquierda: 6 7, en la derecha: 5 6
+cuerpo_declar_variables (45)
+    en la izquierda: 8, en la derecha: 6
+declar_variables (46)
+    en la izquierda: 9 10 11, en la derecha: 8 10
+declar_de_subprogs (47)
+    en la izquierda: 12 13, en la derecha: 5 12
+declara_args (48)
+    en la izquierda: 14 15 16, en la derecha: 15 21
+argumento (49)
+    en la izquierda: 17, en la derecha: 14 15
+declar_de_subprog (50)
+    en la izquierda: 18, en la derecha: 12
+cabecera_subprog (51)
+    en la izquierda: 21 22, en la derecha: 18
+$@2 (52)
+    en la izquierda: 19, en la derecha: 21
+$@3 (53)
+    en la izquierda: 20, en la derecha: 21
+sentencias (54)
+    en la izquierda: 23 24, en la derecha: 5 23 48 49 50 51
+sentencia (55)
+    en la izquierda: 25 26 27 28 29 30 31 32 33, en la derecha: 23
+    35 36 38
+sentencia_asignacion (56)
+    en la izquierda: 34, en la derecha: 26
+sentencia_if (57)
+    en la izquierda: 35, en la derecha: 27
+sentencia_else (58)
+    en la izquierda: 36 37, en la derecha: 35
+sentencia_while (59)
+    en la izquierda: 38, en la derecha: 28
+sentencia_entrada (60)
+    en la izquierda: 39, en la derecha: 29
+identificadores (61)
+    en la izquierda: 40 41 42, en la derecha: 39 41
+sentencia_salida (62)
+    en la izquierda: 43, en la derecha: 30
+lista_expresiones_o_cadena (63)
+    en la izquierda: 44 45 46, en la derecha: 43 44 45
+sentencia_switch (64)
+    en la izquierda: 47, en la derecha: 31
+sentencia_case (65)
+    en la izquierda: 48 49 50, en la derecha: 47 50
+sentencia_default (66)
+    en la izquierda: 51, en la derecha: 49
+llamada_proced (67)
+    en la izquierda: 52 54, en la derecha: 32
+$@4 (68)
+    en la izquierda: 53, en la derecha: 54
+param_llamada (69)
+    en la izquierda: 55 56, en la derecha: 54 55
+expresion (70)
+    en la izquierda: 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72,
+    en la derecha: 34 35 38 44 55 56 57 58 59 60 61 62 63 64 65 66
+    67 71
+agregados_pila (71)
+    en la izquierda: 73 74, en la derecha: 70
+valores_pila (72)
+    en la izquierda: 75 76 77, en la derecha: 74 77
+literal (73)
+    en la izquierda: 78 79 80 81, en la derecha: 48 49 50 69 76 77
+
+
+estado 0
+
+    0 $accept: . programa $end
+
+    error    desplazar e ir al estado 1
+    CABPROG  desplazar e ir al estado 2
+
+    programa           ir al estado 3
+    cabecera_programa  ir al estado 4
+
+
+estado 1
+
+    3 cabecera_programa: error .
+
+    $default  reduce usando la regla 3 (cabecera_programa)
+
+
+estado 2
+
+    2 cabecera_programa: CABPROG .
+
+    $default  reduce usando la regla 2 (cabecera_programa)
+
+
+estado 3
+
+    0 $accept: programa . $end
+
+    $end  desplazar e ir al estado 5
+
+
+estado 4
+
+    1 programa: cabecera_programa . bloque
+
+    INIBLOQUE  desplazar e ir al estado 6
+
+    bloque  ir al estado 7
+
+
+estado 5
+
+    0 $accept: programa $end .
+
+    $default  aceptar
+
+
+estado 6
+
+    5 bloque: INIBLOQUE . $@1 variables_locales declar_de_subprogs sentencias FINBLOQUE
+
+    $default  reduce usando la regla 4 ($@1)
+
+    $@1  ir al estado 8
+
+
+estado 7
+
+    1 programa: cabecera_programa bloque .
+
+    $default  reduce usando la regla 1 (programa)
+
+
+estado 8
+
+    5 bloque: INIBLOQUE $@1 . variables_locales declar_de_subprogs sentencias FINBLOQUE
+
+    $default  reduce usando la regla 7 (variables_locales)
+
+    variables_locales  ir al estado 9
+
+
+estado 9
+
+    5 bloque: INIBLOQUE $@1 variables_locales . declar_de_subprogs sentencias FINBLOQUE
+    6 variables_locales: variables_locales . cuerpo_declar_variables
+
+    TIPO  desplazar e ir al estado 10
+
+    $default  reduce usando la regla 13 (declar_de_subprogs)
+
+    cuerpo_declar_variables  ir al estado 11
+    declar_de_subprogs       ir al estado 12
+
+
+estado 10
+
+    8 cuerpo_declar_variables: TIPO . declar_variables FINLINEA
+
+    error          desplazar e ir al estado 13
+    IDENTIFICADOR  desplazar e ir al estado 14
+
+    declar_variables  ir al estado 15
+
+
+estado 11
+
+    6 variables_locales: variables_locales cuerpo_declar_variables .
+
+    $default  reduce usando la regla 6 (variables_locales)
+
+
+estado 12
+
+    5 bloque: INIBLOQUE $@1 variables_locales declar_de_subprogs . sentencias FINBLOQUE
+   12 declar_de_subprogs: declar_de_subprogs . declar_de_subprog
+
+    PROC  desplazar e ir al estado 16
+
+    $default  reduce usando la regla 24 (sentencias)
+
+    declar_de_subprog  ir al estado 17
+    cabecera_subprog   ir al estado 18
+    sentencias         ir al estado 19
+
+
+estado 13
+
+   11 declar_variables: error .
+
+    $default  reduce usando la regla 11 (declar_variables)
+
+
+estado 14
+
+    9 declar_variables: IDENTIFICADOR .
+
+    $default  reduce usando la regla 9 (declar_variables)
+
+
+estado 15
+
+    8 cuerpo_declar_variables: TIPO declar_variables . FINLINEA
+   10 declar_variables: declar_variables . COMA IDENTIFICADOR
+
+    COMA      desplazar e ir al estado 20
+    FINLINEA  desplazar e ir al estado 21
+
+
+estado 16
+
+   21 cabecera_subprog: PROC . IDENTIFICADOR PARIZQ $@2 declara_args $@3 PARDER
+   22                 | PROC . IDENTIFICADOR PARIZQ PARDER
+
+    IDENTIFICADOR  desplazar e ir al estado 22
+
+
+estado 17
+
+   12 declar_de_subprogs: declar_de_subprogs declar_de_subprog .
+
+    $default  reduce usando la regla 12 (declar_de_subprogs)
+
+
+estado 18
+
+   18 declar_de_subprog: cabecera_subprog . bloque
+
+    INIBLOQUE  desplazar e ir al estado 6
+
+    bloque  ir al estado 23
+
+
+estado 19
+
+    5 bloque: INIBLOQUE $@1 variables_locales declar_de_subprogs sentencias . FINBLOQUE
+   23 sentencias: sentencias . sentencia
+
+    error          desplazar e ir al estado 24
+    INIBLOQUE      desplazar e ir al estado 6
+    FINBLOQUE      desplazar e ir al estado 25
+    COND           desplazar e ir al estado 26
+    MIENT          desplazar e ir al estado 27
+    ENTRADA        desplazar e ir al estado 28
+    SALIDA         desplazar e ir al estado 29
+    COMP           desplazar e ir al estado 30
+    IDENTIFICADOR  desplazar e ir al estado 31
+
+    bloque                ir al estado 32
+    sentencia             ir al estado 33
+    sentencia_asignacion  ir al estado 34
+    sentencia_if          ir al estado 35
+    sentencia_while       ir al estado 36
+    sentencia_entrada     ir al estado 37
+    sentencia_salida      ir al estado 38
+    sentencia_switch      ir al estado 39
+    llamada_proced        ir al estado 40
+
+
+estado 20
+
+   10 declar_variables: declar_variables COMA . IDENTIFICADOR
+
+    IDENTIFICADOR  desplazar e ir al estado 41
+
+
+estado 21
+
+    8 cuerpo_declar_variables: TIPO declar_variables FINLINEA .
+
+    $default  reduce usando la regla 8 (cuerpo_declar_variables)
+
+
+estado 22
+
+   21 cabecera_subprog: PROC IDENTIFICADOR . PARIZQ $@2 declara_args $@3 PARDER
+   22                 | PROC IDENTIFICADOR . PARIZQ PARDER
+
+    PARIZQ  desplazar e ir al estado 42
+
+
+estado 23
+
+   18 declar_de_subprog: cabecera_subprog bloque .
+
+    $default  reduce usando la regla 18 (declar_de_subprog)
+
+
+estado 24
+
+   33 sentencia: error .
+
+    $default  reduce usando la regla 33 (sentencia)
+
+
+estado 25
+
+    5 bloque: INIBLOQUE $@1 variables_locales declar_de_subprogs sentencias FINBLOQUE .
+
+    $default  reduce usando la regla 5 (bloque)
+
+
+estado 26
+
+   35 sentencia_if: COND . PARIZQ expresion PARDER sentencia sentencia_else
+
+    PARIZQ  desplazar e ir al estado 43
+
+
+estado 27
+
+   38 sentencia_while: MIENT . PARIZQ expresion PARDER sentencia
+
+    PARIZQ  desplazar e ir al estado 44
+
+
+estado 28
+
+   39 sentencia_entrada: ENTRADA . identificadores FINLINEA
+
+    error          desplazar e ir al estado 45
+    IDENTIFICADOR  desplazar e ir al estado 46
+
+    identificadores  ir al estado 47
+
+
+estado 29
+
+   43 sentencia_salida: SALIDA . lista_expresiones_o_cadena FINLINEA
+
+    $default  reduce usando la regla 46 (lista_expresiones_o_cadena)
+
+    lista_expresiones_o_cadena  ir al estado 48
+
+
+estado 30
+
+   47 sentencia_switch: COMP . PARIZQ IDENTIFICADOR PARDER sentencia_case
+
+    PARIZQ  desplazar e ir al estado 49
+
+
+estado 31
+
+   34 sentencia_asignacion: IDENTIFICADOR . IGUAL expresion FINLINEA
+   52 llamada_proced: IDENTIFICADOR . PARIZQ PARDER FINLINEA
+   54               | IDENTIFICADOR . PARIZQ $@4 param_llamada PARDER FINLINEA
+
+    PARIZQ  desplazar e ir al estado 50
+    IGUAL   desplazar e ir al estado 51
+
+
+estado 32
+
+   25 sentencia: bloque .
+
+    $default  reduce usando la regla 25 (sentencia)
+
+
+estado 33
+
+   23 sentencias: sentencias sentencia .
+
+    $default  reduce usando la regla 23 (sentencias)
+
+
+estado 34
+
+   26 sentencia: sentencia_asignacion .
+
+    $default  reduce usando la regla 26 (sentencia)
+
+
+estado 35
+
+   27 sentencia: sentencia_if .
+
+    $default  reduce usando la regla 27 (sentencia)
+
+
+estado 36
+
+   28 sentencia: sentencia_while .
+
+    $default  reduce usando la regla 28 (sentencia)
+
+
+estado 37
+
+   29 sentencia: sentencia_entrada .
+
+    $default  reduce usando la regla 29 (sentencia)
+
+
+estado 38
+
+   30 sentencia: sentencia_salida .
+
+    $default  reduce usando la regla 30 (sentencia)
+
+
+estado 39
+
+   31 sentencia: sentencia_switch .
+
+    $default  reduce usando la regla 31 (sentencia)
+
+
+estado 40
+
+   32 sentencia: llamada_proced .
+
+    $default  reduce usando la regla 32 (sentencia)
+
+
+estado 41
+
+   10 declar_variables: declar_variables COMA IDENTIFICADOR .
+
+    $default  reduce usando la regla 10 (declar_variables)
+
+
+estado 42
+
+   21 cabecera_subprog: PROC IDENTIFICADOR PARIZQ . $@2 declara_args $@3 PARDER
+   22                 | PROC IDENTIFICADOR PARIZQ . PARDER
+
+    PARDER  desplazar e ir al estado 52
+
+    $default  reduce usando la regla 19 ($@2)
+
+    $@2  ir al estado 53
+
+
+estado 43
+
+   35 sentencia_if: COND PARIZQ . expresion PARDER sentencia sentencia_else
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 65
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 44
+
+   38 sentencia_while: MIENT PARIZQ . expresion PARDER sentencia
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 68
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 45
+
+   42 identificadores: error .
+
+    $default  reduce usando la regla 42 (identificadores)
+
+
+estado 46
+
+   40 identificadores: IDENTIFICADOR .
+
+    $default  reduce usando la regla 40 (identificadores)
+
+
+estado 47
+
+   39 sentencia_entrada: ENTRADA identificadores . FINLINEA
+   41 identificadores: identificadores . COMA IDENTIFICADOR
+
+    COMA      desplazar e ir al estado 69
+    FINLINEA  desplazar e ir al estado 70
+
+
+estado 48
+
+   43 sentencia_salida: SALIDA lista_expresiones_o_cadena . FINLINEA
+   44 lista_expresiones_o_cadena: lista_expresiones_o_cadena . expresion
+   45                           | lista_expresiones_o_cadena . CONST_CAD
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    FINLINEA       desplazar e ir al estado 71
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+    CONST_CAD      desplazar e ir al estado 72
+
+    expresion       ir al estado 73
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 49
+
+   47 sentencia_switch: COMP PARIZQ . IDENTIFICADOR PARDER sentencia_case
+
+    IDENTIFICADOR  desplazar e ir al estado 74
+
+
+estado 50
+
+   52 llamada_proced: IDENTIFICADOR PARIZQ . PARDER FINLINEA
+   54               | IDENTIFICADOR PARIZQ . $@4 param_llamada PARDER FINLINEA
+
+    PARDER  desplazar e ir al estado 75
+
+    $default  reduce usando la regla 53 ($@4)
+
+    $@4  ir al estado 76
+
+
+estado 51
+
+   34 sentencia_asignacion: IDENTIFICADOR IGUAL . expresion FINLINEA
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 77
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 52
+
+   22 cabecera_subprog: PROC IDENTIFICADOR PARIZQ PARDER .
+
+    $default  reduce usando la regla 22 (cabecera_subprog)
+
+
+estado 53
+
+   21 cabecera_subprog: PROC IDENTIFICADOR PARIZQ $@2 . declara_args $@3 PARDER
+
+    error  desplazar e ir al estado 78
+    TIPO   desplazar e ir al estado 79
+
+    declara_args  ir al estado 80
+    argumento     ir al estado 81
+
+
+estado 54
+
+   72 expresion: error .
+
+    $default  reduce usando la regla 72 (expresion)
+
+
+estado 55
+
+   73 agregados_pila: INIBLOQUE . FINBLOQUE
+   74               | INIBLOQUE . valores_pila FINBLOQUE
+
+    FINBLOQUE      desplazar e ir al estado 82
+    IDENTIFICADOR  desplazar e ir al estado 83
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    valores_pila  ir al estado 84
+    literal       ir al estado 85
+
+
+estado 56
+
+   57 expresion: PARIZQ . expresion PARDER
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 86
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 57
+
+   58 expresion: OPUNA . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 87
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 58
+
+   59 expresion: OP_PILA . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 88
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 59
+
+   71 expresion: SUMRES . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 89
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 60
+
+   68 expresion: IDENTIFICADOR .
+
+    $default  reduce usando la regla 68 (expresion)
+
+
+estado 61
+
+   81 literal: CONST_BOOLEAN .
+
+    $default  reduce usando la regla 81 (literal)
+
+
+estado 62
+
+   78 literal: CONST_INT .
+
+    $default  reduce usando la regla 78 (literal)
+
+
+estado 63
+
+   79 literal: CONST_REAL .
+
+    $default  reduce usando la regla 79 (literal)
+
+
+estado 64
+
+   80 literal: CONST_CHAR .
+
+    $default  reduce usando la regla 80 (literal)
+
+
+estado 65
+
+   35 sentencia_if: COND PARIZQ expresion . PARDER sentencia sentencia_else
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    PARDER         desplazar e ir al estado 91
+    OPMULTDIV      desplazar e ir al estado 92
+    IGUALDAD       desplazar e ir al estado 93
+    AND            desplazar e ir al estado 94
+    OR             desplazar e ir al estado 95
+    XOR            desplazar e ir al estado 96
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+
+estado 66
+
+   70 expresion: agregados_pila .
+
+    $default  reduce usando la regla 70 (expresion)
+
+
+estado 67
+
+   69 expresion: literal .
+
+    $default  reduce usando la regla 69 (expresion)
+
+
+estado 68
+
+   38 sentencia_while: MIENT PARIZQ expresion . PARDER sentencia
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    PARDER         desplazar e ir al estado 99
+    OPMULTDIV      desplazar e ir al estado 92
+    IGUALDAD       desplazar e ir al estado 93
+    AND            desplazar e ir al estado 94
+    OR             desplazar e ir al estado 95
+    XOR            desplazar e ir al estado 96
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+
+estado 69
+
+   41 identificadores: identificadores COMA . IDENTIFICADOR
+
+    IDENTIFICADOR  desplazar e ir al estado 100
+
+
+estado 70
+
+   39 sentencia_entrada: ENTRADA identificadores FINLINEA .
+
+    $default  reduce usando la regla 39 (sentencia_entrada)
+
+
+estado 71
+
+   43 sentencia_salida: SALIDA lista_expresiones_o_cadena FINLINEA .
+
+    $default  reduce usando la regla 43 (sentencia_salida)
+
+
+estado 72
+
+   45 lista_expresiones_o_cadena: lista_expresiones_o_cadena CONST_CAD .
+
+    $default  reduce usando la regla 45 (lista_expresiones_o_cadena)
+
+
+estado 73
+
+   44 lista_expresiones_o_cadena: lista_expresiones_o_cadena expresion .
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    OPMULTDIV      desplazar e ir al estado 92
+    IGUALDAD       desplazar e ir al estado 93
+    AND            desplazar e ir al estado 94
+    OR             desplazar e ir al estado 95
+    XOR            desplazar e ir al estado 96
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+    SUMRES    [reduce usando la regla 44 (lista_expresiones_o_cadena)]
+    $default  reduce usando la regla 44 (lista_expresiones_o_cadena)
+
+
+estado 74
+
+   47 sentencia_switch: COMP PARIZQ IDENTIFICADOR . PARDER sentencia_case
+
+    PARDER  desplazar e ir al estado 101
+
+
+estado 75
+
+   52 llamada_proced: IDENTIFICADOR PARIZQ PARDER . FINLINEA
+
+    FINLINEA  desplazar e ir al estado 102
+
+
+estado 76
+
+   54 llamada_proced: IDENTIFICADOR PARIZQ $@4 . param_llamada PARDER FINLINEA
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    param_llamada   ir al estado 103
+    expresion       ir al estado 104
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 77
+
+   34 sentencia_asignacion: IDENTIFICADOR IGUAL expresion . FINLINEA
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    FINLINEA       desplazar e ir al estado 105
+    OPMULTDIV      desplazar e ir al estado 92
+    IGUALDAD       desplazar e ir al estado 93
+    AND            desplazar e ir al estado 94
+    OR             desplazar e ir al estado 95
+    XOR            desplazar e ir al estado 96
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+
+estado 78
+
+   16 declara_args: error .
+
+    $default  reduce usando la regla 16 (declara_args)
+
+
+estado 79
+
+   17 argumento: TIPO . IDENTIFICADOR
+
+    IDENTIFICADOR  desplazar e ir al estado 106
+
+
+estado 80
+
+   21 cabecera_subprog: PROC IDENTIFICADOR PARIZQ $@2 declara_args . $@3 PARDER
+
+    $default  reduce usando la regla 20 ($@3)
+
+    $@3  ir al estado 107
+
+
+estado 81
+
+   14 declara_args: argumento .
+   15             | argumento . COMA declara_args
+
+    COMA  desplazar e ir al estado 108
+
+    $default  reduce usando la regla 14 (declara_args)
+
+
+estado 82
+
+   73 agregados_pila: INIBLOQUE FINBLOQUE .
+
+    $default  reduce usando la regla 73 (agregados_pila)
+
+
+estado 83
+
+   75 valores_pila: IDENTIFICADOR .
+
+    $default  reduce usando la regla 75 (valores_pila)
+
+
+estado 84
+
+   74 agregados_pila: INIBLOQUE valores_pila . FINBLOQUE
+   77 valores_pila: valores_pila . COMA literal
+
+    FINBLOQUE  desplazar e ir al estado 109
+    COMA       desplazar e ir al estado 110
+
+
+estado 85
+
+   76 valores_pila: literal .
+
+    $default  reduce usando la regla 76 (valores_pila)
+
+
+estado 86
+
+   57 expresion: PARIZQ expresion . PARDER
+   60          | expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    PARDER         desplazar e ir al estado 111
+    OPMULTDIV      desplazar e ir al estado 92
+    IGUALDAD       desplazar e ir al estado 93
+    AND            desplazar e ir al estado 94
+    OR             desplazar e ir al estado 95
+    XOR            desplazar e ir al estado 96
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+
+estado 87
+
+   58 expresion: OPUNA expresion .
+   60          | expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    INS_ELEM  desplazar e ir al estado 98
+
+    $default  reduce usando la regla 58 (expresion)
+
+
+estado 88
+
+   59 expresion: OP_PILA expresion .
+   60          | expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    INS_ELEM  desplazar e ir al estado 98
+
+    $default  reduce usando la regla 59 (expresion)
+
+
+estado 89
+
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+   71          | SUMRES expresion .
+
+    INS_ELEM  desplazar e ir al estado 98
+
+    $default  reduce usando la regla 71 (expresion)
+
+
+estado 90
+
+   62 expresion: expresion OP_RELACIONAL . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 112
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 91
+
+   35 sentencia_if: COND PARIZQ expresion PARDER . sentencia sentencia_else
+
+    error          desplazar e ir al estado 24
+    INIBLOQUE      desplazar e ir al estado 6
+    COND           desplazar e ir al estado 26
+    MIENT          desplazar e ir al estado 27
+    ENTRADA        desplazar e ir al estado 28
+    SALIDA         desplazar e ir al estado 29
+    COMP           desplazar e ir al estado 30
+    IDENTIFICADOR  desplazar e ir al estado 31
+
+    bloque                ir al estado 32
+    sentencia             ir al estado 113
+    sentencia_asignacion  ir al estado 34
+    sentencia_if          ir al estado 35
+    sentencia_while       ir al estado 36
+    sentencia_entrada     ir al estado 37
+    sentencia_salida      ir al estado 38
+    sentencia_switch      ir al estado 39
+    llamada_proced        ir al estado 40
+
+
+estado 92
+
+   60 expresion: expresion OPMULTDIV . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 114
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 93
+
+   66 expresion: expresion IGUALDAD . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 115
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 94
+
+   64 expresion: expresion AND . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 116
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 95
+
+   63 expresion: expresion OR . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 117
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 96
+
+   65 expresion: expresion XOR . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 118
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 97
+
+   61 expresion: expresion SUMRES . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 119
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 98
+
+   67 expresion: expresion INS_ELEM . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 120
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 99
+
+   38 sentencia_while: MIENT PARIZQ expresion PARDER . sentencia
+
+    error          desplazar e ir al estado 24
+    INIBLOQUE      desplazar e ir al estado 6
+    COND           desplazar e ir al estado 26
+    MIENT          desplazar e ir al estado 27
+    ENTRADA        desplazar e ir al estado 28
+    SALIDA         desplazar e ir al estado 29
+    COMP           desplazar e ir al estado 30
+    IDENTIFICADOR  desplazar e ir al estado 31
+
+    bloque                ir al estado 32
+    sentencia             ir al estado 121
+    sentencia_asignacion  ir al estado 34
+    sentencia_if          ir al estado 35
+    sentencia_while       ir al estado 36
+    sentencia_entrada     ir al estado 37
+    sentencia_salida      ir al estado 38
+    sentencia_switch      ir al estado 39
+    llamada_proced        ir al estado 40
+
+
+estado 100
+
+   41 identificadores: identificadores COMA IDENTIFICADOR .
+
+    $default  reduce usando la regla 41 (identificadores)
+
+
+estado 101
+
+   47 sentencia_switch: COMP PARIZQ IDENTIFICADOR PARDER . sentencia_case
+
+    CASO  desplazar e ir al estado 122
+
+    sentencia_case  ir al estado 123
+
+
+estado 102
+
+   52 llamada_proced: IDENTIFICADOR PARIZQ PARDER FINLINEA .
+
+    $default  reduce usando la regla 52 (llamada_proced)
+
+
+estado 103
+
+   54 llamada_proced: IDENTIFICADOR PARIZQ $@4 param_llamada . PARDER FINLINEA
+   55 param_llamada: param_llamada . COMA expresion
+
+    PARDER  desplazar e ir al estado 124
+    COMA    desplazar e ir al estado 125
+
+
+estado 104
+
+   56 param_llamada: expresion .
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    OPMULTDIV      desplazar e ir al estado 92
+    IGUALDAD       desplazar e ir al estado 93
+    AND            desplazar e ir al estado 94
+    OR             desplazar e ir al estado 95
+    XOR            desplazar e ir al estado 96
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+    $default  reduce usando la regla 56 (param_llamada)
+
+
+estado 105
+
+   34 sentencia_asignacion: IDENTIFICADOR IGUAL expresion FINLINEA .
+
+    $default  reduce usando la regla 34 (sentencia_asignacion)
+
+
+estado 106
+
+   17 argumento: TIPO IDENTIFICADOR .
+
+    $default  reduce usando la regla 17 (argumento)
+
+
+estado 107
+
+   21 cabecera_subprog: PROC IDENTIFICADOR PARIZQ $@2 declara_args $@3 . PARDER
+
+    PARDER  desplazar e ir al estado 126
+
+
+estado 108
+
+   15 declara_args: argumento COMA . declara_args
+
+    error  desplazar e ir al estado 78
+    TIPO   desplazar e ir al estado 79
+
+    declara_args  ir al estado 127
+    argumento     ir al estado 81
+
+
+estado 109
+
+   74 agregados_pila: INIBLOQUE valores_pila FINBLOQUE .
+
+    $default  reduce usando la regla 74 (agregados_pila)
+
+
+estado 110
+
+   77 valores_pila: valores_pila COMA . literal
+
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    literal  ir al estado 128
+
+
+estado 111
+
+   57 expresion: PARIZQ expresion PARDER .
+
+    $default  reduce usando la regla 57 (expresion)
+
+
+estado 112
+
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   62          | expresion OP_RELACIONAL expresion .
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OPMULTDIV  desplazar e ir al estado 92
+    SUMRES     desplazar e ir al estado 97
+    INS_ELEM   desplazar e ir al estado 98
+
+    $default  reduce usando la regla 62 (expresion)
+
+
+estado 113
+
+   35 sentencia_if: COND PARIZQ expresion PARDER sentencia . sentencia_else
+
+    ELSE  desplazar e ir al estado 129
+
+    ELSE      [reduce usando la regla 37 (sentencia_else)]
+    $default  reduce usando la regla 37 (sentencia_else)
+
+    sentencia_else  ir al estado 130
+
+
+estado 114
+
+   60 expresion: expresion . OPMULTDIV expresion
+   60          | expresion OPMULTDIV expresion .
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    INS_ELEM  desplazar e ir al estado 98
+
+    $default  reduce usando la regla 60 (expresion)
+
+
+estado 115
+
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   66          | expresion IGUALDAD expresion .
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    OPMULTDIV      desplazar e ir al estado 92
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+    $default  reduce usando la regla 66 (expresion)
+
+
+estado 116
+
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   64          | expresion AND expresion .
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    OPMULTDIV      desplazar e ir al estado 92
+    IGUALDAD       desplazar e ir al estado 93
+    XOR            desplazar e ir al estado 96
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+    $default  reduce usando la regla 64 (expresion)
+
+
+estado 117
+
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   63          | expresion OR expresion .
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    OPMULTDIV      desplazar e ir al estado 92
+    IGUALDAD       desplazar e ir al estado 93
+    AND            desplazar e ir al estado 94
+    XOR            desplazar e ir al estado 96
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+    $default  reduce usando la regla 63 (expresion)
+
+
+estado 118
+
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   65          | expresion XOR expresion .
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    OPMULTDIV      desplazar e ir al estado 92
+    IGUALDAD       desplazar e ir al estado 93
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+    $default  reduce usando la regla 65 (expresion)
+
+
+estado 119
+
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   61          | expresion SUMRES expresion .
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OPMULTDIV  desplazar e ir al estado 92
+    INS_ELEM   desplazar e ir al estado 98
+
+    $default  reduce usando la regla 61 (expresion)
+
+
+estado 120
+
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+   67          | expresion INS_ELEM expresion .
+
+    $default  reduce usando la regla 67 (expresion)
+
+
+estado 121
+
+   38 sentencia_while: MIENT PARIZQ expresion PARDER sentencia .
+
+    $default  reduce usando la regla 38 (sentencia_while)
+
+
+estado 122
+
+   48 sentencia_case: CASO . literal DOSPUNT sentencias FINCASO FINLINEA
+   49               | CASO . literal DOSPUNT sentencias FINCASO FINLINEA sentencia_default
+
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    literal  ir al estado 131
+
+
+estado 123
+
+   47 sentencia_switch: COMP PARIZQ IDENTIFICADOR PARDER sentencia_case .
+   50 sentencia_case: sentencia_case . CASO literal DOSPUNT sentencias FINCASO FINLINEA
+
+    CASO  desplazar e ir al estado 132
+
+    $default  reduce usando la regla 47 (sentencia_switch)
+
+
+estado 124
+
+   54 llamada_proced: IDENTIFICADOR PARIZQ $@4 param_llamada PARDER . FINLINEA
+
+    FINLINEA  desplazar e ir al estado 133
+
+
+estado 125
+
+   55 param_llamada: param_llamada COMA . expresion
+
+    error          desplazar e ir al estado 54
+    INIBLOQUE      desplazar e ir al estado 55
+    PARIZQ         desplazar e ir al estado 56
+    OPUNA          desplazar e ir al estado 57
+    OP_PILA        desplazar e ir al estado 58
+    SUMRES         desplazar e ir al estado 59
+    IDENTIFICADOR  desplazar e ir al estado 60
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    expresion       ir al estado 134
+    agregados_pila  ir al estado 66
+    literal         ir al estado 67
+
+
+estado 126
+
+   21 cabecera_subprog: PROC IDENTIFICADOR PARIZQ $@2 declara_args $@3 PARDER .
+
+    $default  reduce usando la regla 21 (cabecera_subprog)
+
+
+estado 127
+
+   15 declara_args: argumento COMA declara_args .
+
+    $default  reduce usando la regla 15 (declara_args)
+
+
+estado 128
+
+   77 valores_pila: valores_pila COMA literal .
+
+    $default  reduce usando la regla 77 (valores_pila)
+
+
+estado 129
+
+   36 sentencia_else: ELSE . sentencia
+
+    error          desplazar e ir al estado 24
+    INIBLOQUE      desplazar e ir al estado 6
+    COND           desplazar e ir al estado 26
+    MIENT          desplazar e ir al estado 27
+    ENTRADA        desplazar e ir al estado 28
+    SALIDA         desplazar e ir al estado 29
+    COMP           desplazar e ir al estado 30
+    IDENTIFICADOR  desplazar e ir al estado 31
+
+    bloque                ir al estado 32
+    sentencia             ir al estado 135
+    sentencia_asignacion  ir al estado 34
+    sentencia_if          ir al estado 35
+    sentencia_while       ir al estado 36
+    sentencia_entrada     ir al estado 37
+    sentencia_salida      ir al estado 38
+    sentencia_switch      ir al estado 39
+    llamada_proced        ir al estado 40
+
+
+estado 130
+
+   35 sentencia_if: COND PARIZQ expresion PARDER sentencia sentencia_else .
+
+    $default  reduce usando la regla 35 (sentencia_if)
+
+
+estado 131
+
+   48 sentencia_case: CASO literal . DOSPUNT sentencias FINCASO FINLINEA
+   49               | CASO literal . DOSPUNT sentencias FINCASO FINLINEA sentencia_default
+
+    DOSPUNT  desplazar e ir al estado 136
+
+
+estado 132
+
+   50 sentencia_case: sentencia_case CASO . literal DOSPUNT sentencias FINCASO FINLINEA
+
+    CONST_BOOLEAN  desplazar e ir al estado 61
+    CONST_INT      desplazar e ir al estado 62
+    CONST_REAL     desplazar e ir al estado 63
+    CONST_CHAR     desplazar e ir al estado 64
+
+    literal  ir al estado 137
+
+
+estado 133
+
+   54 llamada_proced: IDENTIFICADOR PARIZQ $@4 param_llamada PARDER FINLINEA .
+
+    $default  reduce usando la regla 54 (llamada_proced)
+
+
+estado 134
+
+   55 param_llamada: param_llamada COMA expresion .
+   60 expresion: expresion . OPMULTDIV expresion
+   61          | expresion . SUMRES expresion
+   62          | expresion . OP_RELACIONAL expresion
+   63          | expresion . OR expresion
+   64          | expresion . AND expresion
+   65          | expresion . XOR expresion
+   66          | expresion . IGUALDAD expresion
+   67          | expresion . INS_ELEM expresion
+
+    OP_RELACIONAL  desplazar e ir al estado 90
+    OPMULTDIV      desplazar e ir al estado 92
+    IGUALDAD       desplazar e ir al estado 93
+    AND            desplazar e ir al estado 94
+    OR             desplazar e ir al estado 95
+    XOR            desplazar e ir al estado 96
+    SUMRES         desplazar e ir al estado 97
+    INS_ELEM       desplazar e ir al estado 98
+
+    $default  reduce usando la regla 55 (param_llamada)
+
+
+estado 135
+
+   36 sentencia_else: ELSE sentencia .
+
+    $default  reduce usando la regla 36 (sentencia_else)
+
+
+estado 136
+
+   48 sentencia_case: CASO literal DOSPUNT . sentencias FINCASO FINLINEA
+   49               | CASO literal DOSPUNT . sentencias FINCASO FINLINEA sentencia_default
+
+    $default  reduce usando la regla 24 (sentencias)
+
+    sentencias  ir al estado 138
+
+
+estado 137
+
+   50 sentencia_case: sentencia_case CASO literal . DOSPUNT sentencias FINCASO FINLINEA
+
+    DOSPUNT  desplazar e ir al estado 139
+
+
+estado 138
+
+   23 sentencias: sentencias . sentencia
+   48 sentencia_case: CASO literal DOSPUNT sentencias . FINCASO FINLINEA
+   49               | CASO literal DOSPUNT sentencias . FINCASO FINLINEA sentencia_default
+
+    error          desplazar e ir al estado 24
+    INIBLOQUE      desplazar e ir al estado 6
+    COND           desplazar e ir al estado 26
+    MIENT          desplazar e ir al estado 27
+    ENTRADA        desplazar e ir al estado 28
+    SALIDA         desplazar e ir al estado 29
+    COMP           desplazar e ir al estado 30
+    FINCASO        desplazar e ir al estado 140
+    IDENTIFICADOR  desplazar e ir al estado 31
+
+    bloque                ir al estado 32
+    sentencia             ir al estado 33
+    sentencia_asignacion  ir al estado 34
+    sentencia_if          ir al estado 35
+    sentencia_while       ir al estado 36
+    sentencia_entrada     ir al estado 37
+    sentencia_salida      ir al estado 38
+    sentencia_switch      ir al estado 39
+    llamada_proced        ir al estado 40
+
+
+estado 139
+
+   50 sentencia_case: sentencia_case CASO literal DOSPUNT . sentencias FINCASO FINLINEA
+
+    $default  reduce usando la regla 24 (sentencias)
+
+    sentencias  ir al estado 141
+
+
+estado 140
+
+   48 sentencia_case: CASO literal DOSPUNT sentencias FINCASO . FINLINEA
+   49               | CASO literal DOSPUNT sentencias FINCASO . FINLINEA sentencia_default
+
+    FINLINEA  desplazar e ir al estado 142
+
+
+estado 141
+
+   23 sentencias: sentencias . sentencia
+   50 sentencia_case: sentencia_case CASO literal DOSPUNT sentencias . FINCASO FINLINEA
+
+    error          desplazar e ir al estado 24
+    INIBLOQUE      desplazar e ir al estado 6
+    COND           desplazar e ir al estado 26
+    MIENT          desplazar e ir al estado 27
+    ENTRADA        desplazar e ir al estado 28
+    SALIDA         desplazar e ir al estado 29
+    COMP           desplazar e ir al estado 30
+    FINCASO        desplazar e ir al estado 143
+    IDENTIFICADOR  desplazar e ir al estado 31
+
+    bloque                ir al estado 32
+    sentencia             ir al estado 33
+    sentencia_asignacion  ir al estado 34
+    sentencia_if          ir al estado 35
+    sentencia_while       ir al estado 36
+    sentencia_entrada     ir al estado 37
+    sentencia_salida      ir al estado 38
+    sentencia_switch      ir al estado 39
+    llamada_proced        ir al estado 40
+
+
+estado 142
+
+   48 sentencia_case: CASO literal DOSPUNT sentencias FINCASO FINLINEA .
+   49               | CASO literal DOSPUNT sentencias FINCASO FINLINEA . sentencia_default
+
+    DEFECTO  desplazar e ir al estado 144
+
+    $default  reduce usando la regla 48 (sentencia_case)
+
+    sentencia_default  ir al estado 145
+
+
+estado 143
+
+   50 sentencia_case: sentencia_case CASO literal DOSPUNT sentencias FINCASO . FINLINEA
+
+    FINLINEA  desplazar e ir al estado 146
+
+
+estado 144
+
+   51 sentencia_default: DEFECTO . DOSPUNT sentencias FINCASO FINLINEA
+
+    DOSPUNT  desplazar e ir al estado 147
+
+
+estado 145
+
+   49 sentencia_case: CASO literal DOSPUNT sentencias FINCASO FINLINEA sentencia_default .
+
+    $default  reduce usando la regla 49 (sentencia_case)
+
+
+estado 146
+
+   50 sentencia_case: sentencia_case CASO literal DOSPUNT sentencias FINCASO FINLINEA .
+
+    $default  reduce usando la regla 50 (sentencia_case)
+
+
+estado 147
+
+   51 sentencia_default: DEFECTO DOSPUNT . sentencias FINCASO FINLINEA
+
+    $default  reduce usando la regla 24 (sentencias)
+
+    sentencias  ir al estado 148
+
+
+estado 148
+
+   23 sentencias: sentencias . sentencia
+   51 sentencia_default: DEFECTO DOSPUNT sentencias . FINCASO FINLINEA
+
+    error          desplazar e ir al estado 24
+    INIBLOQUE      desplazar e ir al estado 6
+    COND           desplazar e ir al estado 26
+    MIENT          desplazar e ir al estado 27
+    ENTRADA        desplazar e ir al estado 28
+    SALIDA         desplazar e ir al estado 29
+    COMP           desplazar e ir al estado 30
+    FINCASO        desplazar e ir al estado 149
+    IDENTIFICADOR  desplazar e ir al estado 31
+
+    bloque                ir al estado 32
+    sentencia             ir al estado 33
+    sentencia_asignacion  ir al estado 34
+    sentencia_if          ir al estado 35
+    sentencia_while       ir al estado 36
+    sentencia_entrada     ir al estado 37
+    sentencia_salida      ir al estado 38
+    sentencia_switch      ir al estado 39
+    llamada_proced        ir al estado 40
+
+
+estado 149
+
+   51 sentencia_default: DEFECTO DOSPUNT sentencias FINCASO . FINLINEA
+
+    FINLINEA  desplazar e ir al estado 150
+
+
+estado 150
+
+   51 sentencia_default: DEFECTO DOSPUNT sentencias FINCASO FINLINEA .
+
+    $default  reduce usando la regla 51 (sentencia_default)

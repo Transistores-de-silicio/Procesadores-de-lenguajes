@@ -1,0 +1,170 @@
+<Programa> ::= <Cabecera_programa> <bloque>
+
+<bloque> ::= <Inicio_de_bloque>
+			 <Variables_locales>
+			 <Declar_de_subprogs>
+			 <Sentencias>
+			 <Fin_de_bloque>
+			
+<Declar_de_subprogs> ::= <Declar_de_subprogs> <Declar_subprog>
+						|<Declar_subprog>
+						
+<Declar_subprog> ::= <Cabecera_subprograma> <bloque>
+
+<Variables_locales> ::= <Variables_locales> <Cuerpo_declar_variables>
+					   |<Cuerpo_declar_variables>
+					   
+<Cuerpo_declar_variables> ::= <proc> <tipo> <declar_variables> <fin_linea>
+
+<declar_variables> ::= <id>
+					  |<id> <igualdad>
+					  |<id> <coma> <declar_variables>
+					 
+<Cabecera_subprog> ::= <id> <parizq> <identificadores> <parder>
+
+<Sentencias> ::= <Sentencias> <Sentencia>
+				|<Sentencia>
+				
+<Sentencia> ::= <bloque>
+			   |<sentencia_asignacion>
+			   |<sentencia_if>
+			   |<sentencia_while>
+			   |<sentencia_entrada>
+			   |<sentencia_salida>
+			   |<llamada_proced>
+			   |<sentencia_switch>
+
+<sentencia_asignacion> ::= <id> <igualdad> <fin_linea>
+
+<igualdad> ::= <igualdad> <igual> <id>
+			  |<igual> <expresion>
+
+<sentencia_if> ::= <cond> <parizq> <expresion> <parder> <Sentencia>
+				  |<cond> <parizq> <expresion> <parder> <Sentencia> <sentencia_else>
+				  |<sentencia_if> <cond> <parizq> <expresion> <parder> <Sentencia> <sentencia_else>
+
+<sentencia_else> ::= <else> <Sentencia>
+
+<sentencia_while> ::= <mient> <parizq> <expresion> <parder> <Sentencia>
+				  
+<sentencia_entrada> ::= <int> <identificadores> <fin_linea>
+
+<sentencia_salida> ::= <imp> <lista_expresiones_o_letra> <fin_linea>
+
+<lista_expresiones_o_letra> ::= <identificadores> | <cadena> | <letra>
+
+<identificadores> ::= <identificadores> <coma> <id>
+					 |<id>
+
+<llamada_proced> ::= <id> <parizq> <param_llamada> <parder> <fin_linea>
+
+<param_llamada> ::= <expresion> 
+				   |<param_llamada> <coma> <expresion>
+
+<sentencia_switch> ::= <comp> <parizq> <id> <parder> <sentencia_case> <fin_bloque>
+
+<sentencia_case> ::= <caso> <literal> <dospuntos>
+					 <Sentencias>
+					 <fin_caso> <fin_linea> 
+					|<caso> <literal> <dospuntos>
+					 <Sentencias>
+					 <fin_caso> <fin_linea>
+					 <sentencia_default>
+					|<sentencia_case> 
+					 <caso> <literal> <dospuntos>
+					 <Sentencias>
+					 <fin_caso> <fin_linea>
+
+<sentencia_default> ::= <por_defecto> <dospuntos> 
+						<Sentencias>
+						<fin_caso> <fin_linea>
+
+<expresion> ::= <parizq> <expresion> <parder>
+			   |<op_unario> <expresion>
+			   |<sum_res> <expresion>
+			   |<expresion> <op_binario> <expresion>
+			   |<expresion> <sum_res> <expresion>
+			   |<id>
+			   |<literal>
+			   |<agregados_pila>
+
+<agregados_pila> ::= <Inicio_de_bloque> <fin_de_bloque>
+					|<Inicio_de_bloque> <valores_pila> <fin_de_bloque>
+
+<valores_pila> ::= <identificador> | <valores_pila> <coma> <identificador>
+				  |<caracter> | <valores_pila> <coma> <caracter>
+
+<literal> ::= <numero> | <caracter> | <v_f>
+				  
+<caracter> ::= <comilla> <letra> <comilla>| <comilla> <digito> <comilla>
+
+<id> ::= <letra> <identificador> | <letra>
+
+<identificador> ::= <letra>
+				   |<identificador> <letra>
+				   |<identificador> <digito>
+
+<numero> ::= <natural> | <natural> <punto> <natural> | <sum_res> <natural>
+
+<cadena> ::= <comilla> <cad> <comilla>
+
+<cad> ::= <numero> | <letra> | <cad> <numero> | <cad> <letra> 
+ 
+<v_f> ::= verdadero | falso
+
+<cond> ::= si
+
+<else> ::= en otro caso
+
+<mient> ::= mientras
+
+<int> ::= introducir
+
+<imp> ::= imprimir
+
+<comp> ::= comprobar
+
+<caso> ::= caso
+
+<fin_caso> ::= fin_caso
+
+<dospuntos> ::= :
+
+<Cabecera_programa> ::= inicio
+
+<tipo> ::= entero | real | booleano | caracter 
+		  |pila entero | pila real | pila booleano | pila caracter
+		  
+<natural> ::= <digito> | <digito> <natural>
+
+<proc> ::= procedimiento
+
+<por_defecto> ::= defecto
+
+<punto> ::= .
+
+<parizq> ::= (
+
+<parder> ::= )
+
+<Inicio_de_bloque> ::= {
+
+<Fin_de_bloque> ::= }
+
+<coma> ::= ,
+
+<igual> ::= =
+				
+<comilla> ::= "
+				
+<fin_linea> ::= ;
+
+<op_unario> ::= ++|--|!|&|#|@
+
+<sum_res> ::= + | -
+
+<op_binario> ::= *| / | > | < | >= | <= | && | || | ^ | == | %%
+
+<letra> ::= A|B|..|Z|a|b|..|z
+
+<digito> ::= 0|1|..|9
