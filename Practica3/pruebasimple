@@ -1,0 +1,6 @@
+Program prueba; 
+function funcionA (a1: integer): integer;
+begin
+end;
+begin
+end.

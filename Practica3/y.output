@@ -1,0 +1,1954 @@
+Estado 116 conflictos: 1 desplazamiento(s)/reducción(ones)
+
+
+Gramática
+
+    0 $accept: Programa $end
+
+    1 Programa: Cabecera_programa bloque PUN
+
+    2 Cabecera_programa: PROGRAM IDEN PUNCO
+    3                  | error
+
+    4 bloque: Declar_de_variables_locales Declar_de_subprogs BEGINN Sentencias END
+
+    5 Declar_de_variables_locales: VAR Variables_locales
+    6                            | /* vacío */
+
+    7 Variables_locales: Variables_locales Cuerpo_declar_variables
+    8                  | Cuerpo_declar_variables
+
+    9 Cuerpo_declar_variables: lista_variables DOSPUN TIPO PUNCO
+
+   10 lista_variables: IDEN
+   11                | lista_variables CO IDEN
+   12                | error
+
+   13 Declar_de_subprogs: Declar_de_subprogs Declar_subprog
+   14                   | /* vacío */
+
+   15 Declar_subprog: Cabecera_subprog bloque PUNCO
+
+   16 Cabecera_subprog: FUNCION IDEN PAA lista_argumentos PAC DOSPUN TIPO PUNCO
+
+   17 lista_argumentos: lista_argumentos PUNCO Cuerpo_declar_argumentos
+   18                 | Cuerpo_declar_argumentos
+
+   19 Cuerpo_declar_argumentos: lista_variables DOSPUN TIPO
+
+   20 Sentencias: Sentencias Sentencia
+   21           | /* vacío */
+
+   22 Sentencia: bloque
+   23          | sentencia_asignacion
+   24          | sentencia_if
+   25          | sentencia_while
+   26          | sentencia_for
+   27          | sentencia_entrada
+   28          | sentencia_salida
+   29          | error
+
+   30 sentencia_asignacion: IDEN IGUAL expresion PUNCO
+
+   31 sentencia_if: IF expresion THEN Sentencia
+   32             | IF expresion THEN Sentencia sentencia_else
+
+   33 sentencia_else: ELSE Sentencia
+
+   34 sentencia_while: WHILE expresion DO Declar_de_variables_locales BEGINN Sentencias END PUNCO
+
+   35 sentencia_for: FOR IDEN IGUAL expresion TO expresion DO Declar_de_variables_locales BEGINN Sentencias END PUNCO
+
+   36 sentencia_entrada: ENTRADA PAA lista_variables PAC PUNCO
+
+   37 sentencia_salida: SALIDA PAA lista_expresiones_o_cadena PAC PUNCO
+
+   38 lista_expresiones_o_cadena: expresion
+   39                           | lista_expresiones_o_cadena CO lista_expresiones_o_cadena_cont
+   40                           | FRASE
+
+   41 lista_expresiones_o_cadena_cont: expresion
+   42                                | FRASE
+
+   43 lista_expresiones: expresion
+   44                  | lista_expresiones CO expresion
+   45                  | /* vacío */
+
+   46 expresion: PAA expresion PAC
+   47          | SUMRES expresion
+   48          | expresion SUMRES expresion
+   49          | expresion OPREL expresion
+   50          | expresion MULDIV expresion
+   51          | expresion OR expresion
+   52          | expresion XOR expresion
+   53          | expresion IN expresion
+   54          | expresion AND expresion
+   55          | NOT expresion
+   56          | IDEN
+   57          | constante
+   58          | conjunto
+   59          | funcion
+   60          | error
+
+   61 funcion: IDEN PAA lista_expresiones PAC
+
+   62 conjunto: CORA restoConjunto CORC
+
+   63 restoConjunto: restoConjunto CO expresion
+   64              | constante PUN2 constante
+   65              | expresion
+   66              | /* vacío */
+
+   67 constante: CONS
+   68          | CONSEN
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+error (256) 3 12 29 60
+TIPO (258) 9 16 19
+CONS (259) 67
+CONSEN (260) 68
+IDEN (261) 2 10 11 16 30 35 56 61
+CO (262) 11 39 44 63
+PAA (263) 16 36 37 46 61
+PAC (264) 16 36 37 46 61
+SALIDA (265) 37
+FRASE (266) 40 42
+ENTRADA (267) 36
+FOR (268) 35
+IGUAL (269) 30 35
+TO (270) 35
+DO (271) 34 35
+WHILE (272) 34
+IF (273) 31 32
+THEN (274) 31 32
+ELSE (275) 33
+PUNCO (276) 2 9 15 16 17 30 34 35 36 37
+FUNCION (277) 16
+BEGINN (278) 4 34 35
+END (279) 4 34 35
+VAR (280) 5
+PUN (281) 1
+PUN2 (282) 64
+CORA (283) 62
+CORC (284) 62
+DOSPUN (285) 9 16 19
+PROGRAM (286) 2
+OR (287) 51
+AND (288) 54
+XOR (289) 52
+NOT (290) 55
+IN (291) 53
+OPREL (292) 49
+SUMRES (293) 47 48
+MULDIV (294) 50
+
+
+No terminales con las reglas donde aparecen
+
+$accept (40)
+    en la izquierda: 0
+Programa (41)
+    en la izquierda: 1, en la derecha: 0
+Cabecera_programa (42)
+    en la izquierda: 2 3, en la derecha: 1
+bloque (43)
+    en la izquierda: 4, en la derecha: 1 15 22
+Declar_de_variables_locales (44)
+    en la izquierda: 5 6, en la derecha: 4 34 35
+Variables_locales (45)
+    en la izquierda: 7 8, en la derecha: 5 7
+Cuerpo_declar_variables (46)
+    en la izquierda: 9, en la derecha: 7 8
+lista_variables (47)
+    en la izquierda: 10 11 12, en la derecha: 9 11 19 36
+Declar_de_subprogs (48)
+    en la izquierda: 13 14, en la derecha: 4 13
+Declar_subprog (49)
+    en la izquierda: 15, en la derecha: 13
+Cabecera_subprog (50)
+    en la izquierda: 16, en la derecha: 15
+lista_argumentos (51)
+    en la izquierda: 17 18, en la derecha: 16 17
+Cuerpo_declar_argumentos (52)
+    en la izquierda: 19, en la derecha: 17 18
+Sentencias (53)
+    en la izquierda: 20 21, en la derecha: 4 20 34 35
+Sentencia (54)
+    en la izquierda: 22 23 24 25 26 27 28 29, en la derecha: 20 31
+    32 33
+sentencia_asignacion (55)
+    en la izquierda: 30, en la derecha: 23
+sentencia_if (56)
+    en la izquierda: 31 32, en la derecha: 24
+sentencia_else (57)
+    en la izquierda: 33, en la derecha: 32
+sentencia_while (58)
+    en la izquierda: 34, en la derecha: 25
+sentencia_for (59)
+    en la izquierda: 35, en la derecha: 26
+sentencia_entrada (60)
+    en la izquierda: 36, en la derecha: 27
+sentencia_salida (61)
+    en la izquierda: 37, en la derecha: 28
+lista_expresiones_o_cadena (62)
+    en la izquierda: 38 39 40, en la derecha: 37 39
+lista_expresiones_o_cadena_cont (63)
+    en la izquierda: 41 42, en la derecha: 39
+lista_expresiones (64)
+    en la izquierda: 43 44 45, en la derecha: 44 61
+expresion (65)
+    en la izquierda: 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60,
+    en la derecha: 30 31 32 34 35 38 41 43 44 46 47 48 49 50 51 52
+    53 54 55 63 65
+funcion (66)
+    en la izquierda: 61, en la derecha: 59
+conjunto (67)
+    en la izquierda: 62, en la derecha: 58
+restoConjunto (68)
+    en la izquierda: 63 64 65 66, en la derecha: 62 63
+constante (69)
+    en la izquierda: 67 68, en la derecha: 57 64
+
+
+estado 0
+
+    0 $accept: . Programa $end
+
+    error    desplazar e ir al estado 1
+    PROGRAM  desplazar e ir al estado 2
+
+    Programa           ir al estado 3
+    Cabecera_programa  ir al estado 4
+
+
+estado 1
+
+    3 Cabecera_programa: error .
+
+    $default  reduce usando la regla 3 (Cabecera_programa)
+
+
+estado 2
+
+    2 Cabecera_programa: PROGRAM . IDEN PUNCO
+
+    IDEN  desplazar e ir al estado 5
+
+
+estado 3
+
+    0 $accept: Programa . $end
+
+    $end  desplazar e ir al estado 6
+
+
+estado 4
+
+    1 Programa: Cabecera_programa . bloque PUN
+
+    VAR  desplazar e ir al estado 7
+
+    $default  reduce usando la regla 6 (Declar_de_variables_locales)
+
+    bloque                       ir al estado 8
+    Declar_de_variables_locales  ir al estado 9
+
+
+estado 5
+
+    2 Cabecera_programa: PROGRAM IDEN . PUNCO
+
+    PUNCO  desplazar e ir al estado 10
+
+
+estado 6
+
+    0 $accept: Programa $end .
+
+    $default  aceptar
+
+
+estado 7
+
+    5 Declar_de_variables_locales: VAR . Variables_locales
+
+    error  desplazar e ir al estado 11
+    IDEN   desplazar e ir al estado 12
+
+    Variables_locales        ir al estado 13
+    Cuerpo_declar_variables  ir al estado 14
+    lista_variables          ir al estado 15
+
+
+estado 8
+
+    1 Programa: Cabecera_programa bloque . PUN
+
+    PUN  desplazar e ir al estado 16
+
+
+estado 9
+
+    4 bloque: Declar_de_variables_locales . Declar_de_subprogs BEGINN Sentencias END
+
+    $default  reduce usando la regla 14 (Declar_de_subprogs)
+
+    Declar_de_subprogs  ir al estado 17
+
+
+estado 10
+
+    2 Cabecera_programa: PROGRAM IDEN PUNCO .
+
+    $default  reduce usando la regla 2 (Cabecera_programa)
+
+
+estado 11
+
+   12 lista_variables: error .
+
+    $default  reduce usando la regla 12 (lista_variables)
+
+
+estado 12
+
+   10 lista_variables: IDEN .
+
+    $default  reduce usando la regla 10 (lista_variables)
+
+
+estado 13
+
+    5 Declar_de_variables_locales: VAR Variables_locales .
+    7 Variables_locales: Variables_locales . Cuerpo_declar_variables
+
+    error  desplazar e ir al estado 11
+    IDEN   desplazar e ir al estado 12
+
+    FUNCION  reduce usando la regla 5 (Declar_de_variables_locales)
+    BEGINN   reduce usando la regla 5 (Declar_de_variables_locales)
+
+    Cuerpo_declar_variables  ir al estado 18
+    lista_variables          ir al estado 15
+
+
+estado 14
+
+    8 Variables_locales: Cuerpo_declar_variables .
+
+    $default  reduce usando la regla 8 (Variables_locales)
+
+
+estado 15
+
+    9 Cuerpo_declar_variables: lista_variables . DOSPUN TIPO PUNCO
+   11 lista_variables: lista_variables . CO IDEN
+
+    CO      desplazar e ir al estado 19
+    DOSPUN  desplazar e ir al estado 20
+
+
+estado 16
+
+    1 Programa: Cabecera_programa bloque PUN .
+
+    $default  reduce usando la regla 1 (Programa)
+
+
+estado 17
+
+    4 bloque: Declar_de_variables_locales Declar_de_subprogs . BEGINN Sentencias END
+   13 Declar_de_subprogs: Declar_de_subprogs . Declar_subprog
+
+    FUNCION  desplazar e ir al estado 21
+    BEGINN   desplazar e ir al estado 22
+
+    Declar_subprog    ir al estado 23
+    Cabecera_subprog  ir al estado 24
+
+
+estado 18
+
+    7 Variables_locales: Variables_locales Cuerpo_declar_variables .
+
+    $default  reduce usando la regla 7 (Variables_locales)
+
+
+estado 19
+
+   11 lista_variables: lista_variables CO . IDEN
+
+    IDEN  desplazar e ir al estado 25
+
+
+estado 20
+
+    9 Cuerpo_declar_variables: lista_variables DOSPUN . TIPO PUNCO
+
+    TIPO  desplazar e ir al estado 26
+
+
+estado 21
+
+   16 Cabecera_subprog: FUNCION . IDEN PAA lista_argumentos PAC DOSPUN TIPO PUNCO
+
+    IDEN  desplazar e ir al estado 27
+
+
+estado 22
+
+    4 bloque: Declar_de_variables_locales Declar_de_subprogs BEGINN . Sentencias END
+
+    $default  reduce usando la regla 21 (Sentencias)
+
+    Sentencias  ir al estado 28
+
+
+estado 23
+
+   13 Declar_de_subprogs: Declar_de_subprogs Declar_subprog .
+
+    $default  reduce usando la regla 13 (Declar_de_subprogs)
+
+
+estado 24
+
+   15 Declar_subprog: Cabecera_subprog . bloque PUNCO
+
+    VAR  desplazar e ir al estado 7
+
+    $default  reduce usando la regla 6 (Declar_de_variables_locales)
+
+    bloque                       ir al estado 29
+    Declar_de_variables_locales  ir al estado 9
+
+
+estado 25
+
+   11 lista_variables: lista_variables CO IDEN .
+
+    $default  reduce usando la regla 11 (lista_variables)
+
+
+estado 26
+
+    9 Cuerpo_declar_variables: lista_variables DOSPUN TIPO . PUNCO
+
+    PUNCO  desplazar e ir al estado 30
+
+
+estado 27
+
+   16 Cabecera_subprog: FUNCION IDEN . PAA lista_argumentos PAC DOSPUN TIPO PUNCO
+
+    PAA  desplazar e ir al estado 31
+
+
+estado 28
+
+    4 bloque: Declar_de_variables_locales Declar_de_subprogs BEGINN Sentencias . END
+   20 Sentencias: Sentencias . Sentencia
+
+    error    desplazar e ir al estado 32
+    IDEN     desplazar e ir al estado 33
+    SALIDA   desplazar e ir al estado 34
+    ENTRADA  desplazar e ir al estado 35
+    FOR      desplazar e ir al estado 36
+    WHILE    desplazar e ir al estado 37
+    IF       desplazar e ir al estado 38
+    END      desplazar e ir al estado 39
+    VAR      desplazar e ir al estado 7
+
+    FUNCION  reduce usando la regla 6 (Declar_de_variables_locales)
+    BEGINN   reduce usando la regla 6 (Declar_de_variables_locales)
+
+    bloque                       ir al estado 40
+    Declar_de_variables_locales  ir al estado 9
+    Sentencia                    ir al estado 41
+    sentencia_asignacion         ir al estado 42
+    sentencia_if                 ir al estado 43
+    sentencia_while              ir al estado 44
+    sentencia_for                ir al estado 45
+    sentencia_entrada            ir al estado 46
+    sentencia_salida             ir al estado 47
+
+
+estado 29
+
+   15 Declar_subprog: Cabecera_subprog bloque . PUNCO
+
+    PUNCO  desplazar e ir al estado 48
+
+
+estado 30
+
+    9 Cuerpo_declar_variables: lista_variables DOSPUN TIPO PUNCO .
+
+    $default  reduce usando la regla 9 (Cuerpo_declar_variables)
+
+
+estado 31
+
+   16 Cabecera_subprog: FUNCION IDEN PAA . lista_argumentos PAC DOSPUN TIPO PUNCO
+
+    error  desplazar e ir al estado 11
+    IDEN   desplazar e ir al estado 12
+
+    lista_variables           ir al estado 49
+    lista_argumentos          ir al estado 50
+    Cuerpo_declar_argumentos  ir al estado 51
+
+
+estado 32
+
+   29 Sentencia: error .
+
+    $default  reduce usando la regla 29 (Sentencia)
+
+
+estado 33
+
+   30 sentencia_asignacion: IDEN . IGUAL expresion PUNCO
+
+    IGUAL  desplazar e ir al estado 52
+
+
+estado 34
+
+   37 sentencia_salida: SALIDA . PAA lista_expresiones_o_cadena PAC PUNCO
+
+    PAA  desplazar e ir al estado 53
+
+
+estado 35
+
+   36 sentencia_entrada: ENTRADA . PAA lista_variables PAC PUNCO
+
+    PAA  desplazar e ir al estado 54
+
+
+estado 36
+
+   35 sentencia_for: FOR . IDEN IGUAL expresion TO expresion DO Declar_de_variables_locales BEGINN Sentencias END PUNCO
+
+    IDEN  desplazar e ir al estado 55
+
+
+estado 37
+
+   34 sentencia_while: WHILE . expresion DO Declar_de_variables_locales BEGINN Sentencias END PUNCO
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 64
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 38
+
+   31 sentencia_if: IF . expresion THEN Sentencia
+   32             | IF . expresion THEN Sentencia sentencia_else
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 68
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 39
+
+    4 bloque: Declar_de_variables_locales Declar_de_subprogs BEGINN Sentencias END .
+
+    $default  reduce usando la regla 4 (bloque)
+
+
+estado 40
+
+   22 Sentencia: bloque .
+
+    $default  reduce usando la regla 22 (Sentencia)
+
+
+estado 41
+
+   20 Sentencias: Sentencias Sentencia .
+
+    $default  reduce usando la regla 20 (Sentencias)
+
+
+estado 42
+
+   23 Sentencia: sentencia_asignacion .
+
+    $default  reduce usando la regla 23 (Sentencia)
+
+
+estado 43
+
+   24 Sentencia: sentencia_if .
+
+    $default  reduce usando la regla 24 (Sentencia)
+
+
+estado 44
+
+   25 Sentencia: sentencia_while .
+
+    $default  reduce usando la regla 25 (Sentencia)
+
+
+estado 45
+
+   26 Sentencia: sentencia_for .
+
+    $default  reduce usando la regla 26 (Sentencia)
+
+
+estado 46
+
+   27 Sentencia: sentencia_entrada .
+
+    $default  reduce usando la regla 27 (Sentencia)
+
+
+estado 47
+
+   28 Sentencia: sentencia_salida .
+
+    $default  reduce usando la regla 28 (Sentencia)
+
+
+estado 48
+
+   15 Declar_subprog: Cabecera_subprog bloque PUNCO .
+
+    $default  reduce usando la regla 15 (Declar_subprog)
+
+
+estado 49
+
+   11 lista_variables: lista_variables . CO IDEN
+   19 Cuerpo_declar_argumentos: lista_variables . DOSPUN TIPO
+
+    CO      desplazar e ir al estado 19
+    DOSPUN  desplazar e ir al estado 69
+
+
+estado 50
+
+   16 Cabecera_subprog: FUNCION IDEN PAA lista_argumentos . PAC DOSPUN TIPO PUNCO
+   17 lista_argumentos: lista_argumentos . PUNCO Cuerpo_declar_argumentos
+
+    PAC    desplazar e ir al estado 70
+    PUNCO  desplazar e ir al estado 71
+
+
+estado 51
+
+   18 lista_argumentos: Cuerpo_declar_argumentos .
+
+    $default  reduce usando la regla 18 (lista_argumentos)
+
+
+estado 52
+
+   30 sentencia_asignacion: IDEN IGUAL . expresion PUNCO
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 72
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 53
+
+   37 sentencia_salida: SALIDA PAA . lista_expresiones_o_cadena PAC PUNCO
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    FRASE   desplazar e ir al estado 73
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    lista_expresiones_o_cadena  ir al estado 74
+    expresion                   ir al estado 75
+    funcion                     ir al estado 65
+    conjunto                    ir al estado 66
+    constante                   ir al estado 67
+
+
+estado 54
+
+   36 sentencia_entrada: ENTRADA PAA . lista_variables PAC PUNCO
+
+    error  desplazar e ir al estado 11
+    IDEN   desplazar e ir al estado 12
+
+    lista_variables  ir al estado 76
+
+
+estado 55
+
+   35 sentencia_for: FOR IDEN . IGUAL expresion TO expresion DO Declar_de_variables_locales BEGINN Sentencias END PUNCO
+
+    IGUAL  desplazar e ir al estado 77
+
+
+estado 56
+
+   60 expresion: error .
+
+    $default  reduce usando la regla 60 (expresion)
+
+
+estado 57
+
+   67 constante: CONS .
+
+    $default  reduce usando la regla 67 (constante)
+
+
+estado 58
+
+   68 constante: CONSEN .
+
+    $default  reduce usando la regla 68 (constante)
+
+
+estado 59
+
+   56 expresion: IDEN .
+   61 funcion: IDEN . PAA lista_expresiones PAC
+
+    PAA  desplazar e ir al estado 78
+
+    $default  reduce usando la regla 56 (expresion)
+
+
+estado 60
+
+   46 expresion: PAA . expresion PAC
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 79
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 61
+
+   62 conjunto: CORA . restoConjunto CORC
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    CO    reduce usando la regla 66 (restoConjunto)
+    CORC  reduce usando la regla 66 (restoConjunto)
+
+    expresion      ir al estado 80
+    funcion        ir al estado 65
+    conjunto       ir al estado 66
+    restoConjunto  ir al estado 81
+    constante      ir al estado 82
+
+
+estado 62
+
+   55 expresion: NOT . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 83
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 63
+
+   47 expresion: SUMRES . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 84
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 64
+
+   34 sentencia_while: WHILE expresion . DO Declar_de_variables_locales BEGINN Sentencias END PUNCO
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    DO      desplazar e ir al estado 85
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+
+estado 65
+
+   59 expresion: funcion .
+
+    $default  reduce usando la regla 59 (expresion)
+
+
+estado 66
+
+   58 expresion: conjunto .
+
+    $default  reduce usando la regla 58 (expresion)
+
+
+estado 67
+
+   57 expresion: constante .
+
+    $default  reduce usando la regla 57 (expresion)
+
+
+estado 68
+
+   31 sentencia_if: IF expresion . THEN Sentencia
+   32             | IF expresion . THEN Sentencia sentencia_else
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    THEN    desplazar e ir al estado 93
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+
+estado 69
+
+   19 Cuerpo_declar_argumentos: lista_variables DOSPUN . TIPO
+
+    TIPO  desplazar e ir al estado 94
+
+
+estado 70
+
+   16 Cabecera_subprog: FUNCION IDEN PAA lista_argumentos PAC . DOSPUN TIPO PUNCO
+
+    DOSPUN  desplazar e ir al estado 95
+
+
+estado 71
+
+   17 lista_argumentos: lista_argumentos PUNCO . Cuerpo_declar_argumentos
+
+    error  desplazar e ir al estado 11
+    IDEN   desplazar e ir al estado 12
+
+    lista_variables           ir al estado 49
+    Cuerpo_declar_argumentos  ir al estado 96
+
+
+estado 72
+
+   30 sentencia_asignacion: IDEN IGUAL expresion . PUNCO
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    PUNCO   desplazar e ir al estado 97
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+
+estado 73
+
+   40 lista_expresiones_o_cadena: FRASE .
+
+    $default  reduce usando la regla 40 (lista_expresiones_o_cadena)
+
+
+estado 74
+
+   37 sentencia_salida: SALIDA PAA lista_expresiones_o_cadena . PAC PUNCO
+   39 lista_expresiones_o_cadena: lista_expresiones_o_cadena . CO lista_expresiones_o_cadena_cont
+
+    CO   desplazar e ir al estado 98
+    PAC  desplazar e ir al estado 99
+
+
+estado 75
+
+   38 lista_expresiones_o_cadena: expresion .
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 38 (lista_expresiones_o_cadena)
+
+
+estado 76
+
+   11 lista_variables: lista_variables . CO IDEN
+   36 sentencia_entrada: ENTRADA PAA lista_variables . PAC PUNCO
+
+    CO   desplazar e ir al estado 19
+    PAC  desplazar e ir al estado 100
+
+
+estado 77
+
+   35 sentencia_for: FOR IDEN IGUAL . expresion TO expresion DO Declar_de_variables_locales BEGINN Sentencias END PUNCO
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 101
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 78
+
+   61 funcion: IDEN PAA . lista_expresiones PAC
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    CO   reduce usando la regla 45 (lista_expresiones)
+    PAC  reduce usando la regla 45 (lista_expresiones)
+
+    lista_expresiones  ir al estado 102
+    expresion          ir al estado 103
+    funcion            ir al estado 65
+    conjunto           ir al estado 66
+    constante          ir al estado 67
+
+
+estado 79
+
+   46 expresion: PAA expresion . PAC
+   48          | expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    PAC     desplazar e ir al estado 104
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+
+estado 80
+
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+   65 restoConjunto: expresion .
+
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 65 (restoConjunto)
+
+
+estado 81
+
+   62 conjunto: CORA restoConjunto . CORC
+   63 restoConjunto: restoConjunto . CO expresion
+
+    CO    desplazar e ir al estado 105
+    CORC  desplazar e ir al estado 106
+
+
+estado 82
+
+   57 expresion: constante .
+   64 restoConjunto: constante . PUN2 constante
+
+    PUN2  desplazar e ir al estado 107
+
+    $default  reduce usando la regla 57 (expresion)
+
+
+estado 83
+
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+   55          | NOT expresion .
+
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 55 (expresion)
+
+
+estado 84
+
+   47 expresion: SUMRES expresion .
+   48          | expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 47 (expresion)
+
+
+estado 85
+
+   34 sentencia_while: WHILE expresion DO . Declar_de_variables_locales BEGINN Sentencias END PUNCO
+
+    VAR  desplazar e ir al estado 7
+
+    $default  reduce usando la regla 6 (Declar_de_variables_locales)
+
+    Declar_de_variables_locales  ir al estado 108
+
+
+estado 86
+
+   51 expresion: expresion OR . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 109
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 87
+
+   54 expresion: expresion AND . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 110
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 88
+
+   52 expresion: expresion XOR . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 111
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 89
+
+   53 expresion: expresion IN . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 112
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 90
+
+   49 expresion: expresion OPREL . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 113
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 91
+
+   48 expresion: expresion SUMRES . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 114
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 92
+
+   50 expresion: expresion MULDIV . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 115
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 93
+
+   31 sentencia_if: IF expresion THEN . Sentencia
+   32             | IF expresion THEN . Sentencia sentencia_else
+
+    error    desplazar e ir al estado 32
+    IDEN     desplazar e ir al estado 33
+    SALIDA   desplazar e ir al estado 34
+    ENTRADA  desplazar e ir al estado 35
+    FOR      desplazar e ir al estado 36
+    WHILE    desplazar e ir al estado 37
+    IF       desplazar e ir al estado 38
+    VAR      desplazar e ir al estado 7
+
+    FUNCION  reduce usando la regla 6 (Declar_de_variables_locales)
+    BEGINN   reduce usando la regla 6 (Declar_de_variables_locales)
+
+    bloque                       ir al estado 40
+    Declar_de_variables_locales  ir al estado 9
+    Sentencia                    ir al estado 116
+    sentencia_asignacion         ir al estado 42
+    sentencia_if                 ir al estado 43
+    sentencia_while              ir al estado 44
+    sentencia_for                ir al estado 45
+    sentencia_entrada            ir al estado 46
+    sentencia_salida             ir al estado 47
+
+
+estado 94
+
+   19 Cuerpo_declar_argumentos: lista_variables DOSPUN TIPO .
+
+    $default  reduce usando la regla 19 (Cuerpo_declar_argumentos)
+
+
+estado 95
+
+   16 Cabecera_subprog: FUNCION IDEN PAA lista_argumentos PAC DOSPUN . TIPO PUNCO
+
+    TIPO  desplazar e ir al estado 117
+
+
+estado 96
+
+   17 lista_argumentos: lista_argumentos PUNCO Cuerpo_declar_argumentos .
+
+    $default  reduce usando la regla 17 (lista_argumentos)
+
+
+estado 97
+
+   30 sentencia_asignacion: IDEN IGUAL expresion PUNCO .
+
+    $default  reduce usando la regla 30 (sentencia_asignacion)
+
+
+estado 98
+
+   39 lista_expresiones_o_cadena: lista_expresiones_o_cadena CO . lista_expresiones_o_cadena_cont
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    FRASE   desplazar e ir al estado 118
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    lista_expresiones_o_cadena_cont  ir al estado 119
+    expresion                        ir al estado 120
+    funcion                          ir al estado 65
+    conjunto                         ir al estado 66
+    constante                        ir al estado 67
+
+
+estado 99
+
+   37 sentencia_salida: SALIDA PAA lista_expresiones_o_cadena PAC . PUNCO
+
+    PUNCO  desplazar e ir al estado 121
+
+
+estado 100
+
+   36 sentencia_entrada: ENTRADA PAA lista_variables PAC . PUNCO
+
+    PUNCO  desplazar e ir al estado 122
+
+
+estado 101
+
+   35 sentencia_for: FOR IDEN IGUAL expresion . TO expresion DO Declar_de_variables_locales BEGINN Sentencias END PUNCO
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    TO      desplazar e ir al estado 123
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+
+estado 102
+
+   44 lista_expresiones: lista_expresiones . CO expresion
+   61 funcion: IDEN PAA lista_expresiones . PAC
+
+    CO   desplazar e ir al estado 124
+    PAC  desplazar e ir al estado 125
+
+
+estado 103
+
+   43 lista_expresiones: expresion .
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 43 (lista_expresiones)
+
+
+estado 104
+
+   46 expresion: PAA expresion PAC .
+
+    $default  reduce usando la regla 46 (expresion)
+
+
+estado 105
+
+   63 restoConjunto: restoConjunto CO . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 126
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 106
+
+   62 conjunto: CORA restoConjunto CORC .
+
+    $default  reduce usando la regla 62 (conjunto)
+
+
+estado 107
+
+   64 restoConjunto: constante PUN2 . constante
+
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+
+    constante  ir al estado 127
+
+
+estado 108
+
+   34 sentencia_while: WHILE expresion DO Declar_de_variables_locales . BEGINN Sentencias END PUNCO
+
+    BEGINN  desplazar e ir al estado 128
+
+
+estado 109
+
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   51          | expresion OR expresion .
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 51 (expresion)
+
+
+estado 110
+
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+   54          | expresion AND expresion .
+
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 54 (expresion)
+
+
+estado 111
+
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   52          | expresion XOR expresion .
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 52 (expresion)
+
+
+estado 112
+
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   53          | expresion IN expresion .
+   54          | expresion . AND expresion
+
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 53 (expresion)
+
+
+estado 113
+
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   49          | expresion OPREL expresion .
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 49 (expresion)
+
+
+estado 114
+
+   48 expresion: expresion . SUMRES expresion
+   48          | expresion SUMRES expresion .
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 48 (expresion)
+
+
+estado 115
+
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   50          | expresion MULDIV expresion .
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    $default  reduce usando la regla 50 (expresion)
+
+
+estado 116
+
+   31 sentencia_if: IF expresion THEN Sentencia .
+   32             | IF expresion THEN Sentencia . sentencia_else
+
+    ELSE  desplazar e ir al estado 129
+
+    ELSE      [reduce usando la regla 31 (sentencia_if)]
+    $default  reduce usando la regla 31 (sentencia_if)
+
+    sentencia_else  ir al estado 130
+
+
+estado 117
+
+   16 Cabecera_subprog: FUNCION IDEN PAA lista_argumentos PAC DOSPUN TIPO . PUNCO
+
+    PUNCO  desplazar e ir al estado 131
+
+
+estado 118
+
+   42 lista_expresiones_o_cadena_cont: FRASE .
+
+    $default  reduce usando la regla 42 (lista_expresiones_o_cadena_cont)
+
+
+estado 119
+
+   39 lista_expresiones_o_cadena: lista_expresiones_o_cadena CO lista_expresiones_o_cadena_cont .
+
+    $default  reduce usando la regla 39 (lista_expresiones_o_cadena)
+
+
+estado 120
+
+   41 lista_expresiones_o_cadena_cont: expresion .
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 41 (lista_expresiones_o_cadena_cont)
+
+
+estado 121
+
+   37 sentencia_salida: SALIDA PAA lista_expresiones_o_cadena PAC PUNCO .
+
+    $default  reduce usando la regla 37 (sentencia_salida)
+
+
+estado 122
+
+   36 sentencia_entrada: ENTRADA PAA lista_variables PAC PUNCO .
+
+    $default  reduce usando la regla 36 (sentencia_entrada)
+
+
+estado 123
+
+   35 sentencia_for: FOR IDEN IGUAL expresion TO . expresion DO Declar_de_variables_locales BEGINN Sentencias END PUNCO
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 132
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 124
+
+   44 lista_expresiones: lista_expresiones CO . expresion
+
+    error   desplazar e ir al estado 56
+    CONS    desplazar e ir al estado 57
+    CONSEN  desplazar e ir al estado 58
+    IDEN    desplazar e ir al estado 59
+    PAA     desplazar e ir al estado 60
+    CORA    desplazar e ir al estado 61
+    NOT     desplazar e ir al estado 62
+    SUMRES  desplazar e ir al estado 63
+
+    expresion  ir al estado 133
+    funcion    ir al estado 65
+    conjunto   ir al estado 66
+    constante  ir al estado 67
+
+
+estado 125
+
+   61 funcion: IDEN PAA lista_expresiones PAC .
+
+    $default  reduce usando la regla 61 (funcion)
+
+
+estado 126
+
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+   63 restoConjunto: restoConjunto CO expresion .
+
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 63 (restoConjunto)
+
+
+estado 127
+
+   64 restoConjunto: constante PUN2 constante .
+
+    $default  reduce usando la regla 64 (restoConjunto)
+
+
+estado 128
+
+   34 sentencia_while: WHILE expresion DO Declar_de_variables_locales BEGINN . Sentencias END PUNCO
+
+    $default  reduce usando la regla 21 (Sentencias)
+
+    Sentencias  ir al estado 134
+
+
+estado 129
+
+   33 sentencia_else: ELSE . Sentencia
+
+    error    desplazar e ir al estado 32
+    IDEN     desplazar e ir al estado 33
+    SALIDA   desplazar e ir al estado 34
+    ENTRADA  desplazar e ir al estado 35
+    FOR      desplazar e ir al estado 36
+    WHILE    desplazar e ir al estado 37
+    IF       desplazar e ir al estado 38
+    VAR      desplazar e ir al estado 7
+
+    FUNCION  reduce usando la regla 6 (Declar_de_variables_locales)
+    BEGINN   reduce usando la regla 6 (Declar_de_variables_locales)
+
+    bloque                       ir al estado 40
+    Declar_de_variables_locales  ir al estado 9
+    Sentencia                    ir al estado 135
+    sentencia_asignacion         ir al estado 42
+    sentencia_if                 ir al estado 43
+    sentencia_while              ir al estado 44
+    sentencia_for                ir al estado 45
+    sentencia_entrada            ir al estado 46
+    sentencia_salida             ir al estado 47
+
+
+estado 130
+
+   32 sentencia_if: IF expresion THEN Sentencia sentencia_else .
+
+    $default  reduce usando la regla 32 (sentencia_if)
+
+
+estado 131
+
+   16 Cabecera_subprog: FUNCION IDEN PAA lista_argumentos PAC DOSPUN TIPO PUNCO .
+
+    $default  reduce usando la regla 16 (Cabecera_subprog)
+
+
+estado 132
+
+   35 sentencia_for: FOR IDEN IGUAL expresion TO expresion . DO Declar_de_variables_locales BEGINN Sentencias END PUNCO
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    DO      desplazar e ir al estado 136
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+
+estado 133
+
+   44 lista_expresiones: lista_expresiones CO expresion .
+   48 expresion: expresion . SUMRES expresion
+   49          | expresion . OPREL expresion
+   50          | expresion . MULDIV expresion
+   51          | expresion . OR expresion
+   52          | expresion . XOR expresion
+   53          | expresion . IN expresion
+   54          | expresion . AND expresion
+
+    OR      desplazar e ir al estado 86
+    AND     desplazar e ir al estado 87
+    XOR     desplazar e ir al estado 88
+    IN      desplazar e ir al estado 89
+    OPREL   desplazar e ir al estado 90
+    SUMRES  desplazar e ir al estado 91
+    MULDIV  desplazar e ir al estado 92
+
+    $default  reduce usando la regla 44 (lista_expresiones)
+
+
+estado 134
+
+   20 Sentencias: Sentencias . Sentencia
+   34 sentencia_while: WHILE expresion DO Declar_de_variables_locales BEGINN Sentencias . END PUNCO
+
+    error    desplazar e ir al estado 32
+    IDEN     desplazar e ir al estado 33
+    SALIDA   desplazar e ir al estado 34
+    ENTRADA  desplazar e ir al estado 35
+    FOR      desplazar e ir al estado 36
+    WHILE    desplazar e ir al estado 37
+    IF       desplazar e ir al estado 38
+    END      desplazar e ir al estado 137
+    VAR      desplazar e ir al estado 7
+
+    FUNCION  reduce usando la regla 6 (Declar_de_variables_locales)
+    BEGINN   reduce usando la regla 6 (Declar_de_variables_locales)
+
+    bloque                       ir al estado 40
+    Declar_de_variables_locales  ir al estado 9
+    Sentencia                    ir al estado 41
+    sentencia_asignacion         ir al estado 42
+    sentencia_if                 ir al estado 43
+    sentencia_while              ir al estado 44
+    sentencia_for                ir al estado 45
+    sentencia_entrada            ir al estado 46
+    sentencia_salida             ir al estado 47
+
+
+estado 135
+
+   33 sentencia_else: ELSE Sentencia .
+
+    $default  reduce usando la regla 33 (sentencia_else)
+
+
+estado 136
+
+   35 sentencia_for: FOR IDEN IGUAL expresion TO expresion DO . Declar_de_variables_locales BEGINN Sentencias END PUNCO
+
+    VAR  desplazar e ir al estado 7
+
+    $default  reduce usando la regla 6 (Declar_de_variables_locales)
+
+    Declar_de_variables_locales  ir al estado 138
+
+
+estado 137
+
+   34 sentencia_while: WHILE expresion DO Declar_de_variables_locales BEGINN Sentencias END . PUNCO
+
+    PUNCO  desplazar e ir al estado 139
+
+
+estado 138
+
+   35 sentencia_for: FOR IDEN IGUAL expresion TO expresion DO Declar_de_variables_locales . BEGINN Sentencias END PUNCO
+
+    BEGINN  desplazar e ir al estado 140
+
+
+estado 139
+
+   34 sentencia_while: WHILE expresion DO Declar_de_variables_locales BEGINN Sentencias END PUNCO .
+
+    $default  reduce usando la regla 34 (sentencia_while)
+
+
+estado 140
+
+   35 sentencia_for: FOR IDEN IGUAL expresion TO expresion DO Declar_de_variables_locales BEGINN . Sentencias END PUNCO
+
+    $default  reduce usando la regla 21 (Sentencias)
+
+    Sentencias  ir al estado 141
+
+
+estado 141
+
+   20 Sentencias: Sentencias . Sentencia
+   35 sentencia_for: FOR IDEN IGUAL expresion TO expresion DO Declar_de_variables_locales BEGINN Sentencias . END PUNCO
+
+    error    desplazar e ir al estado 32
+    IDEN     desplazar e ir al estado 33
+    SALIDA   desplazar e ir al estado 34
+    ENTRADA  desplazar e ir al estado 35
+    FOR      desplazar e ir al estado 36
+    WHILE    desplazar e ir al estado 37
+    IF       desplazar e ir al estado 38
+    END      desplazar e ir al estado 142
+    VAR      desplazar e ir al estado 7
+
+    FUNCION  reduce usando la regla 6 (Declar_de_variables_locales)
+    BEGINN   reduce usando la regla 6 (Declar_de_variables_locales)
+
+    bloque                       ir al estado 40
+    Declar_de_variables_locales  ir al estado 9
+    Sentencia                    ir al estado 41
+    sentencia_asignacion         ir al estado 42
+    sentencia_if                 ir al estado 43
+    sentencia_while              ir al estado 44
+    sentencia_for                ir al estado 45
+    sentencia_entrada            ir al estado 46
+    sentencia_salida             ir al estado 47
+
+
+estado 142
+
+   35 sentencia_for: FOR IDEN IGUAL expresion TO expresion DO Declar_de_variables_locales BEGINN Sentencias END . PUNCO
+
+    PUNCO  desplazar e ir al estado 143
+
+
+estado 143
+
+   35 sentencia_for: FOR IDEN IGUAL expresion TO expresion DO Declar_de_variables_locales BEGINN Sentencias END PUNCO .
+
+    $default  reduce usando la regla 35 (sentencia_for)

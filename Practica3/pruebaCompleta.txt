@@ -1,0 +1,81 @@
+Program prueba; 
+var 
+ve: integer;
+vf: real;
+vc: char;
+vl: boolean;
+pe ,pe2, p3: set of integer;
+pf ,pf2: set of real;
+pl: set of boolean;
+function funcionA (a1: integer; a2: real; a3: char ): integer;
+	var
+	x1, x2: integer;
+
+	function funcionB (b1: char; b2: boolean): char;
+		Var
+		xf, x2: real;
+		function funcionC (c1: boolean; c2: integer): real;
+			Var
+			x1: real;
+		begin
+			x1:= 1.3;
+			if(c2>10) then
+				c2:=c2-1;
+			else
+				x1:=3.1;
+			funcionC:= x1;
+		end;
+	begin
+		xf:=funcionC(true, 10);
+		x2:=xf*( funcionC(false,1)-funcionC(true,23))/10.0;
+		while(x2*funcionC(false,1)-xf < 10.0) DO
+		begin
+			x2:=x2*xf;
+		end;
+	end;
+	function funcionD (d1: real):real;
+		var
+		dato: char;
+		valor: integer;	
+		function funcionE(e1: char; e2: char): char;
+		begin
+			write('Introduzca dos caracteres ');
+			writeln('sadjoafsj', valor, 'adadd', valor, id);
+			read(e1, e2);
+			if(e1='a') then
+				funcionE:=e1;
+			else if (e1*'b') then
+				funcionE:=e2;
+			else
+				funcionE:=' ';
+		end;
+	begin
+		write('introduce un valor entero ');
+		read(valor);
+		if (d1>0.0 )then
+			var
+			dato: integer;
+		begin
+			dato:=2;
+			dato:=valor*20/dato;
+		end;
+		else
+		begin
+			valor:=valor*100;
+			d1:=d1/100.0;
+		end;
+		funcionD:=d1;
+	end;
+begin
+	pe:=[]+[10, 2]*[20]-[1,2];
+	pf:=[0] in pf;
+	if(not ([0] in pf)) then
+		ve:=ve+[0];
+	else
+	begin
+		pe:=pe*pe2;
+		pe:=pe+[0..4];
+	end;
+end;
+begin 
+end.

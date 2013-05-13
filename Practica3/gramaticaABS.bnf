@@ -1,0 +1,92 @@
+<Programa>::= <Cabecera_programa> <bloque> "PUN";
+
+<Cabecera_programa>::= "PROGRAM" "IDEN" "PUNCO";
+
+<bloque>::= <Declar_de_variables_locales> <Declar_de_subprogs> <BEGINN> <Sentencias> <END>;
+
+<Declar_de_variables_locales>::= "VAR" <Variables_locales>
+	| ;
+
+<Variables_locales>::= <Variables_locales> <Cuerpo_declar_variables>
+	| <Cuerpo_declar_variables>;
+	
+<Cuerpo_declar_variables>::= <lista_variables> "DOSPUN" "TIPO" "PUNCO";
+
+<lista_variables>::= "IDEN"
+    | <lista_variables> "CO" "IDEN";
+
+<Declar_de_subprogs>::= <Declar_de_subprogs> <Declar_subprog>
+	| ;
+
+<Declar_subprog>::= <Cabecera_subprog> <bloque> "PUNCO";
+
+<Cabecera_subprog>::= "FUNCION" "IDEN" "PAA" <lista_argumentos> "PAC" "DOSPUN" "TIPO" "PUNCO";
+
+<lista_argumentos>::= <lista_argumentos> "PUNCO" <Cuerpo_declar_argumentos>
+	| <Cuerpo_declar_argumentos>;
+
+<Cuerpo_declar_argumentos::= <lista_variables> "DOSPUN"" "TIPO";
+
+<Sentencias::= <Sentencias<Sentencia>
+	| ;
+	
+<Sentencia::= <bloque> "PUNCO"
+	| <sentencia_asignacion>
+	| <sentencia_if>
+	| <sentencia_while>
+	| <sentencia_for>
+	| <sentencia_entrada>
+	| <sentencia_salida>;
+	
+<sentencia_asignacion>::= "IDEN" "IGUAL" <expresion> "PUNCO";
+
+<sentencia_if>::= 
+	  "IF" <Expresion> "THEN" <Sentencia>
+	| "IF" <Expresion> "THEN" <Sentencia> "ELSE" <Sentencia>;
+
+<sentencia_while>::= "WHILE" <expresion> "DO" <Sentencia>;
+
+<sentencia_for>::= "FOR" "IDEN" "IGUAL" <expresion> "TO" <expresion> "DO" <Sentencia>;
+
+<sentencia_entrada>::= "ENTRADA" "PAA" <lista_variables> "PAC" "PUNCO";
+
+<sentencia_salida>::= "SALIDA" "PAA" <lista_expresiones_o_cadena> "PAC" "PUNCO";
+
+<lista_expresiones_o_cadena>::=<Expresion>
+    | <lista_expresiones_o_cadena> "CO" <lista_expresiones_o_cadena_cont>
+    | "FRASE";
+
+<lista_expresiones_o_cadena_cont>::=<Expresion>
+	| "FRASE";
+
+<lista_expresiones>::=<Expresion>
+	| <lista_expresiones> "CO" <Expresion>;
+
+
+<expresion>::= "PAA" <Expresion> "PAC"
+	| "SUMRES" <Expresion>
+	|<Expresion> "SUMRES" <Expresion>
+	|<Expresion> "OPREL" <Expresion>
+	|<Expresion> "MULDIV" <Expresion>
+	|<Expresion> "OR" <Expresion>
+	|<Expresion> "XOR" <Expresion>
+	|<Expresion> "IN" <Expresion>
+	|<Expresion> "AND" <Expresion>
+	| "NOT" <Expresion>
+	| "IDEN
+	| <constante
+	| <conjunto
+	| <funcion>;
+
+<funcion>::= "IDEN" "PAA" <lista_expresiones> "PAC";
+ 
+<conjunto>::= "CORA" <restoConjunto> "CORC";
+
+<restoConjunto>::= <restoConjunto> "CO" <Expresion>
+    | <constante> "PUN2" <constante>
+    | <Expresion>
+	| ;
+
+<constante::= "CONS"
+	| "CONSEN";
+	
